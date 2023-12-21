@@ -2,10 +2,163 @@
 
 This repository reports the code and the benchmarks for the paper "Tactical: Fault Localization of AI-Enabled Cyber-Physical Systems by Exploiting Temporal Neuron Activation".
 
-Abstract:
+## Abstract:
 
 Modern cyber-physical systems (CPS) are evolving to integrate deep neural networks (DNNs) as controllers, leading to the emergence of AI-enabled CPSs. However, an inadequately trained DNN controller may produce incorrect control decisions, exposing the systems to huge safety risks. To prevent unsafe behaviors from happening, it is crucial to localize the faulty neurons in DNN controllers, thereby providing valuable references for further system re-engineering. However, since unsafe system behaviors typically arise from a sequence of control decisions, establishing a connection between faulty neurons and unsafe behaviors is extremely challenging. To tackle this problem, we propose TACTICAL that localizes the faults in AI-enabled CPS by exploiting neuron activation criteria that incorporate temporal aspects of DNN controller inferences. Based on the executions of test cases, we construct a spectrum for each neuron, which records the information including the specification satisfaction of each system execution and the activation status of the neuron in the system execution. Having the spectra of all neurons, we apply existing suspiciousness metrics to compute a suspiciousness score for each neuron, by which we select the most suspicious ones. We experimentally evaluate TACTICAL on 12 AI-enabled CPS benchmarks spanning over different domains, by injecting artificial faults into their DNN controllers. The results shows the effectiveness of TACTICAL, based on comparisons with a baseline approach and over different configurations. Moreover, we study the influence of hyperparameters to the effectiveness of TACTICAL, and thereby provide suggestions on hyperparameter selection.
 
+<div align=center><img width="50%" height="50%" src="figs/workflow.png"></div>
+
+## Folder Structure Conventions
+
+```
+.
+├── README.md
+├── RQ2percentage.xlsx
+├── benchmarks
+│    ├── ACC
+│    │   ├── ACC_4_10
+│    │   │    ├── dataset
+│    │   │    │   ├── ACC_vl_28_ve_22_spec_1_FFNN_trainlm_10_10_10_10_Nor_Sat_Feb_15_Tr.mat
+│    │   │    │   └── ACC_vl_28_ve_22_spec_2_FFNN_trainlm_10_10_10_10_Nor_Sat_Feb_15_Tr.mat
+│    │   │    └── model
+│    │   │        ├── ACC_FFNN_trainlm_10_10_10_10_Nor_Sat_Feb_15.slx
+│    │   │        ├── ACC_FFNN_trainlm_10_10_10_10_Nor_Sat_Feb_15_M.slx
+│    │   │        └── config&controller
+│    │   │            ├── ACC_FFNN_trainlm_10_10_10_10_Nor_config_Feb_15.mat
+│    │   │            └── ACC_FFNN_trainlm_10_10_10_10_Nor_controller_Feb_15.slx
+│    │   ├── ACC_vl_28_ve_22_spec_1_FFNN_trainscg_15_15_15_Nor_Sat_Feb_7
+│    │   │    └── model
+│    │   │        ├── ACC_FFNN_trainscg_15_15_15_Nor_Sat_Feb_7.slx
+│    │   │        ├── ACC_FFNN_trainscg_15_15_15_Nor_Sat_Feb_7_M.slx
+│    │   │        └── config&controller
+│    │   │            ├── ACC_FFNN_trainscg_15_15_15_Nor_config_Feb_7.mat
+│    │   │            └── ACC_FFNN_trainscg_15_15_15_Nor_controller_Feb_7.slx
+│    │   └── ACCdataset
+│    │       ├── ACC_vl_28_ve_22_ddefault_105_spec_1_Orig_Feb_7_Tr.mat
+│    │       ├── ACC_vl_28_ve_22_spec_1_FFNN_trainscg_15_15_15_Nor_Sat_Feb_7_Tr.mat
+│    │       ├── ACC_vl_28_ve_22_spec_2_FFNN_trainscg_15_15_15_Nor_Sat_Feb_7_Tr.mat
+│    │       ├── Nor_ACC_vl_28_ve_22_ddefault_105_spec_1_Orig_Feb_7_Tr.mat
+│    │       └── Nor_ACC_vl_28_ve_22_ddefault_20_spec_1_Orig_Feb_7_Tr.mat
+│    ├── AFC
+│    │   ├── AFC_3_15_TSE
+│    │   │    ├── dataset
+│    │   │    │   ├── AFC_mu_020_spec_1_FFNN_trainlm_15_15_15_UnNor_May_15_2022_Tr.mat
+│    │   │    │   └── AFC_mu_020_spec_2_FFNN_trainlm_15_15_15_UnNor_May_15_2022_Tr.mat
+│    │   │    └── model
+│    │   │        ├── AFC_FFNN_trainlm_15_15_15_Apr_1_2020.slx
+│    │   │        ├── AFC_FFNN_trainlm_15_15_15_Apr_1_2020_M.slx
+│    │   │        └── config&controller
+│    │   │            └── AFC_FFNN_trainlm_15_15_15_UnNor_config_Apr_1_2020.mat
+│    │   └── AFC_4_15_TSE
+│    │       ├── dataset
+│    │       │    ├── AFC_mu_020_spec_1_FFNN_trainlm_15_15_15_15_UnNor_May_15_2022_Tr.mat
+│    │       │    └── AFC_mu_020_spec_2_FFNN_trainlm_15_15_15_15_UnNor_May_15_2022_Tr.mat
+│    │       └── model
+│    │           ├── AFC_FFNN_trainlm_15_15_15_15_Apr_1_2020.slx
+│    │           ├── AFC_FFNN_trainlm_15_15_15_15_Apr_1_2020_M.slx
+│    │           └── config&controller
+│    │               └── AFC_FFNN_trainlm_15_15_15_15_UnNor_config_Apr_1_2020.mat
+│    ├── SC
+│    │   ├── SC_FFNN_trainlm_10_10_10_10_Dec_8
+│    │   │    ├── dataset
+│    │   │    │   └── SC_FFNN_trainlm_10_10_10_10_Dec_8_spec_1_Tr.mat
+│    │   │    └── model
+│    │   │        ├── SC_FFNN_trainlm_10_10_10_10_Dec_8.slx
+│    │   │        ├── SC_FFNN_trainlm_10_10_10_10_Dec_8_M.slx
+│    │   │        └── config&controller
+│    │   │            ├── SC_FFNN_trainlm_10_10_10_10_config_Dec_8.mat
+│    │   │            └── SC_FFNN_trainlm_10_10_10_10_controller_Dec_8.slx
+│    │   ├── SC_FFNN_trainlm_15_15_15_15_Dec_8
+│    │   │    ├── dataset
+│    │   │    │   └── SC_FFNN_trainlm_15_15_15_15_Dec_8_spec_1_Tr.mat
+│    │   │    └── model
+│    │   │        ├── SC_FFNN_trainlm_15_15_15_15_Dec_8.slx
+│    │   │        ├── SC_FFNN_trainlm_15_15_15_15_Dec_8_M.slx
+│    │   │        └── config&controller
+│    │   │            ├── SC_FFNN_trainlm_15_15_15_15_config_Dec_8.mat
+│    │   │            └── SC_FFNN_trainlm_15_15_15_15_controller_Dec_8.slx
+│    │   └── SC_Trad
+│    │       ├── dataset
+│    │       │    ├── SC_RNN_22_spec_1_Dec_8_Te.mat
+│    │       │    └── SC_RNN_22_spec_1_Dec_8_Tr.mat
+│    │       └── model
+│    │           └── steamcondense_RNN_22.slx
+│    └── WT
+│        ├── WT_error_086_spec_1_FFNN_trainbfg_15_15_15_Dec_22
+│        │   ├── dataset
+│        │   │    ├── WT_error_086_spec_1_FFNN_trainbfg_15_15_15_Dec_22_Te.mat
+│        │   │    └── WT_error_086_spec_1_FFNN_trainbfg_15_15_15_Dec_22_Tr.mat
+│        │   └── model
+│        │       ├── WT_FFNN_trainbfg_15_15_15_Dec_22.slx
+│        │       ├── WT_FFNN_trainbfg_15_15_15_Dec_22_M.slx
+│        │       └── config&controller
+│        │           ├── WT_FFNN_trainbfg_15_15_15_config_Dec_22.mat
+│        │           └── WT_FFNN_trainbfg_15_15_15_controller_Dec_22.slx
+│        └── WT_error_086_spec_1_FFNN_trainbfg_5_5_5_Dec_22
+│            ├── dataset
+│            │   ├── WT_error_086_spec_1_FFNN_trainbfg_5_5_5_Dec_22_Te.mat
+│            │   └── WT_error_086_spec_1_FFNN_trainbfg_5_5_5_Dec_22_Tr.mat
+│            └── model
+│                ├── WT_FFNN_trainbfg_5_5_5_Dec_22.slx
+│                ├── WT_FFNN_trainbfg_5_5_5_Dec_22_M.slx
+│                └── config&controller
+│                    ├── WT_FFNN_trainbfg_5_5_5_config_Dec_22.mat
+│                    └── WT_FFNN_trainbfg_5_5_5_controller_Dec_22.slx
+├── breach
+├── result
+├── src
+│    ├── CovFL.m
+│    ├── RQ1part1.m
+│    ├── RQ1part2_RQ3.m
+│    ├── RQ2.m
+│    ├── covcriteria
+│    │   ├── MDNC.m
+│    │   ├── MINC.m
+│    │   ├── NC.m
+│    │   ├── NDNC.m
+│    │   ├── PDNC.m
+│    │   ├── TPKNC.m
+│    │   ├── TTK.m
+│    │   └── TimedNC.m
+│    ├── func
+│    │   ├── autoSelect.m
+│    │   ├── bugGenerator.m
+│    │   ├── diffTopkAnalyze.m
+│    │   ├── insertWeightBug.m
+│    │   ├── nnresultEval.m
+│    │   ├── parallelAnalyzeDiffParam.m
+│    │   ├── parsaveFLinfo.m
+│    │   ├── parsaveMutInfo.m
+│    │   ├── plotTopkAnalyze.m
+│    │   ├── processBestData.m
+│    │   ├── randFL.m
+│    │   ├── readFileName.m
+│    │   ├── sigMatch.m
+│    │   ├── spsCalculator.m
+│    │   ├── spsScoreCompute.m
+│    │   ├── spstopkAnalyze.m
+│    │   └── transData.m
+│    └── util
+│        ├── neuronPlot.m
+│        ├── parallelAnalyzeDiffParam.m
+│        └── ratePlotBar.m
+└── test
+    ├── FL.py
+    ├── config
+    │    ├── ACC
+    │    │   ├── ACC_mut_3_15
+    │    │   └── ACC_mut_4_10
+    │    ├── AFC
+    │    │   ├── AFC_mut_3_15
+    │    │   └── AFC_mut_4_15
+    │    ├── SC
+    │    │   ├── SC_mut_4_10
+    │    │   └── SC_mut_4_15
+    │    └── WT
+    │        ├── WT_mut_3_15
+    │        └── WT_mut_3_5
+    └── valFL.py
+```
 
 ## System requirement
 - Operating system: Linux or MacOS;
