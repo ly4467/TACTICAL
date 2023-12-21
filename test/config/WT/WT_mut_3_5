@@ -36,9 +36,9 @@ oc_span 1
 nn 1
 WT_FFNN_trainbfg_5_5_5_config_Dec_22.mat
 phi_str 1
-alw_[4,4.9](h_error[t] < 0.86 and h_error[t] > -0.86) and alw_[9,9.9](h_error[t] < 0.86 and h_error[t] > -0.86) and alw_[14,14.9](h_error[t] < 0.86 and h_error[t] > -0.86)
+WT1 alw_[4,4.9](h_error[t] < 0.86 and h_error[t] > -0.86) and alw_[9,9.9](h_error[t] < 0.86 and h_error[t] > -0.86) and alw_[14,14.9](h_error[t] < 0.86 and h_error[t] > -0.86)
 sig_str 1
-h_error
+'h_error'
 parameters 4
 T=15;
 Ts=0.1;

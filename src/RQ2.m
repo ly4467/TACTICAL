@@ -2,17 +2,16 @@ clear;
 close all;
 clc;
 bdclose('all');
-cd /Users/ly/Desktop/new-project
-addpath(genpath('/Users/ly/Desktop/new-project'));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cd /Users/ly/Desktop/TACTICAL
+addpath(genpath('/Users/ly/Desktop/TACTICAL'));
 metIdx = 6;     % the metric you want to use. e.g. 6 -> alphaKulczynski2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 dataPath = 'result';
 maxPercent = 0:0.05:0.1;    % same as the RQ1 setting
 spsMetric = {'alphaTarantula','alphaOchiai','alphaDstar','alphaJaccard','alphaKulczynski1','alphaKulczynski2'};
-covMetric = {'nc','tkc','tnc','ttk','pd','nd','mi','md'};
 pathDir = dir([dataPath, '/*_spec*']);
 mkdir('result/RQ2Data');
 
@@ -88,8 +87,8 @@ for perIdx = 1:numel(maxPercent)
 end
 
 
-ncData = reshape(smallData_20p(metIdx,1,:), [numel(pathDir) numel(maxPercent)]);
-tkData = cat(2, reshape(smallData_20p(metIdx,2,1:numel(pathDir)), [numel(pathDir) 1]), reshape(mediumData_20p(metIdx,2,1:numel(pathDir)), [numel(pathDir) 1]), reshape(largeData_20p(metIdx,2,1:numel(pathDir)), [numel(pathDir) 1]));
+inaData = reshape(smallData_20p(metIdx,1,:), [numel(pathDir) numel(maxPercent)]);
+itkData = cat(2, reshape(smallData_20p(metIdx,2,1:numel(pathDir)), [numel(pathDir) 1]), reshape(mediumData_20p(metIdx,2,1:numel(pathDir)), [numel(pathDir) 1]), reshape(largeData_20p(metIdx,2,1:numel(pathDir)), [numel(pathDir) 1]));
 
 tncData_s = reshape(smallData_20p(metIdx,3,:), [numel(pathDir) numel(maxPercent)]);
 tncData_m = reshape(mediumData_20p(metIdx,3,:), [numel(pathDir) numel(maxPercent)]);
@@ -116,7 +115,7 @@ for lineIdx = 1:size(miData,1)
     mimdData_met{end+1} = cat(1, miData(lineIdx,:), mdData(lineIdx,:));
 end
 
-% pageArr = cat(3, ncData, tncData_mean, pdData_mean, ndData_mean);
+% pageArr = cat(3, inaData, tncData_mean, pdData_mean, ndData_mean);
 % bmDataCell = cell(1,4);
 % for bmIdx = 1:size(pageArr,1)
 %     bmDataCell{bmIdx} = [];
@@ -125,11 +124,11 @@ end
 %     end
 % end
 
-tnc_arr = cell(1,10);
+pna_arr = cell(1,10);
 for sz = 1:size(tncData_Page,1)
-    tnc_arr{sz} = [];
+    pna_arr{sz} = [];
     for bm = 1:size(tncData_Page(sz,:,:), 3)
-        tnc_arr{sz} = cat(1, tnc_arr{sz}, tncData_Page(sz, :, bm));
+        pna_arr{sz} = cat(1, pna_arr{sz}, tncData_Page(sz, :, bm));
     end  
 end
 pd_arr = cell(1,10);
@@ -173,13 +172,13 @@ for bmIdx = 1:numel(bmCell)
     bmFolderName = sprintf('%s_%d_%d_spec%d', bm, numel(nnStru), nnStru(1), spec);
     bmPath = fullfile(dataPath, bmFolderName);
 
-    path = fullfile(bmPath, 'transDataProcessed', 'onlyTTK*');
+    path = fullfile(bmPath, 'transDataProcessed', 'onlyPTK*');
     pathFolder = dir(path);
 
     pathNameCell = {};
     for k = 1:numel(bmCell{bmIdx}{3})
         for time = 1:numel(bmCell{bmIdx}{4})
-            pathNameCell{end+1} = sprintf('onlyTTK_%d %d_percent_%.2f_topkAnalyze', bmCell{bmIdx}{4}(time), bmCell{bmIdx}{3}(k));
+            pathNameCell{end+1} = sprintf('onlyPTK_%d %d_percent_%.2f_topkAnalyze', bmCell{bmIdx}{4}(time), bmCell{bmIdx}{3}(k));
         end
     end
 
@@ -199,22 +198,22 @@ for bmIdx = 1:numel(bmCell)
 end
 
 rqDir = dir('result/RQ2Data/*.mat');
-ttkData = {};
+ptkData = {};
 for i = 1:numel(rqDir)
     filename_reg = fullfile(rqDir(i).folder, rqDir(i).name);
     reg = load(filename_reg);
     delete filename_reg
 
-    ttkData{end+1} = [];
+    ptkData{end+1} = [];
     for idx = 1:numel(reg.bmDataCell)
-        ttkData{1,i} = cat(2, ttkData{1,i}, reg.bmDataCell{idx}.areaArr(6,4,1));
+        ptkData{1,i} = cat(2, ptkData{1,i}, reg.bmDataCell{idx}.areaArr(6,4,1));
     end
 
     % 检查一下对应关系
-    ttkData{1,i} = reshape(ttkData{1,i}, [3 3]);
+    ptkData{1,i} = reshape(ptkData{1,i}, [3 3]);
     clear reg
 end
 
 RQ2filename = fullfile(dataPath, sprintf('RQ2Data_%s.mat', spsMetric{metIdx}));
-save(RQ2filename, 'ncData', 'tkData', 'tnc_arr', 'ttkData', 'pd_arr', 'nd_arr', 'miData', 'mdData');
+save(RQ2filename, 'inaData', 'itkData', 'pna_arr', 'ptkData', 'pd_arr', 'nd_arr', 'miData', 'mdData');
 

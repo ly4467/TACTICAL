@@ -221,9 +221,9 @@ classdef CovFL < handle
             
             if strcmp(this.bm, 'ACC')
                 interval_LR = {[0,50]};
-            elseif strcmp(this.bm, 'AFC') && spec_i == 1
+            elseif strcmp(this.bm, 'AFC') && spec_i == 3
                 interval_LR = {[0,30]};
-            elseif strcmp(this.bm, 'AFC') && spec_i == 2
+            elseif strcmp(this.bm, 'AFC') && spec_i == 4
                 interval_LR = {[10,30]};
             elseif strcmp(this.bm, 'WT')
                 interval_LR = {[4,4.9], [9,9.9], [14,14.9]};
@@ -257,11 +257,11 @@ classdef CovFL < handle
                         end
                     end
                 end
-            elseif strcmp(this.bm, 'AFC') && spec_i == 1
+            elseif strcmp(this.bm, 'AFC') && spec_i == 3
                 af = sigMatch(Br, "AF");
                 mu = abs(af - 14.7)/14.7;
                 neg_interval(mu > 0.2) = 1;
-            elseif strcmp(this.bm, 'AFC') && spec_i == 2
+            elseif strcmp(this.bm, 'AFC') && spec_i == 4
                 af = sigMatch(Br, "AF");
                 % i == 300, i = 301, true
                 for i = 101: 286

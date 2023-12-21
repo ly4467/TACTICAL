@@ -2,10 +2,10 @@ clear;
 close all;
 clc;
 bdclose('all');
-cd /Users/ly/Desktop/new-project 
-addpath(genpath('/Users/ly/Desktop/new-project'));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cd /Users/ly/Desktop/TACTICAL 
+addpath(genpath('/Users/ly/Desktop/TACTICAL'));
 path = 'result/bestResults';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

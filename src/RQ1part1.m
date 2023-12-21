@@ -2,14 +2,15 @@ clear;
 close all;
 clc;
 bdclose('all');
-cd /Users/ly/Desktop/new-project 
-addpath(genpath('/Users/ly/Desktop/new-project'));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cd /Users/ly/Desktop/TACTICAL 
+addpath(genpath('/Users/ly/Desktop/TACTICAL'));
 automode = 1;   % 1 auto/ 0 manual
 
 % when automode=0, set parameters manually  
 bmName = 'WT#1 S_{WT}^{5}';
+% parameter has small/medium/large 3 levels
 actParam = {['m'],['s'],['s' 'm'],['m' 'm'],['m' 'm'],['s' 'l'],['l'],['l']};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -54,7 +55,7 @@ elseif automode == 0
     bmName_SC2_spec1 = {'SC#2 S_{SC}^{6}', [15 15 15 15], [2 3 4], [5 10 15], [5 10 15], [5 10 15]};    
     bmCell = {bmName_ACC1_spec1, bmName_ACC1_spec2, bmName_ACC2_spec1, bmName_ACC2_spec2, bmName_AFC1_spec1, bmName_AFC1_spec2, bmName_AFC2_spec1, bmName_AFC2_spec2, bmName_WT1_spec1, bmName_WT2_spec1, bmName_SC1_spec1, bmName_SC2_spec1};
 
-    fileconfig = sprintf('_NC_%s_TK_%s_TNC_%s %s_TTK_%s %s_PD_%s %s_ND_%s %s_MI_%s_MD_%s', actParam{1}, actParam{2}, actParam{3}(1), actParam{3}(2), actParam{4}(1), actParam{4}(2), actParam{5}(1), actParam{5}(2), actParam{6}(1), actParam{6}(2), actParam{7}, actParam{8});
+    fileconfig = sprintf('_INA_%s_ITK_%s_PNA_%s %s_PTK_%s %s_PD_%s %s_ND_%s %s_MI_%s_MD_%s', actParam{1}, actParam{2}, actParam{3}(1), actParam{3}(2), actParam{4}(1), actParam{4}(2), actParam{5}(1), actParam{5}(2), actParam{6}(1), actParam{6}(2), actParam{7}, actParam{8});
     bmInfo = {bmName, actParam, fileconfig};
 
     for i = 1:numel(bmCell)

@@ -45,11 +45,11 @@ arg = ''
 linenum = 0
 
 # For testing, delete this line after test
-file = "/Users/ly/Desktop/new-project/test/config/AFC/fl_model_15_15_15_15"
+# file = "/Users/ly/Desktop/new-project/test/config/SC/SC_mut_4_10"
 
 # Change to "with open(sys.argv[1],'r') as conf:"
 with open(sys.argv[1], 'r') as conf:
-#with open(file, 'r') as conf:
+# with open(file, 'r') as conf:
 	context = conf.readlines()
 	for line in context:
 		argu = line.strip().split()
@@ -252,16 +252,24 @@ for phi_i in range(len(phi_str)):
 			bm.write("behavior_change_rate = " + str(behavior_change_rate) + ";\n\n")
 
 			bm.write('phi_str = \'' + property[1] + '\';\n')
-			bm.write('spec_i = ' + str(phi_i + 1) + ';\n')
+			if bench == 'ACC':
+				addNum = 1
+			elif bench == 'AFC':
+				addNum = 3
+			elif bench == 'WT':
+				addNum = 5
+			elif bench == 'SC':
+				addNum = 6
+			bm.write('spec_i = ' + str(phi_i + addNum) + ';\n')
 			bm.write('sig_str = ' + sig_st + ';\n\n')
 
 			bm.write('covModel = CovFL(bm, mdl, D, D_run, is_nor, net, T, Ts, sysconf, phi_str, sig_str, spec_i, [], [], [], T_suit_num, [], [], behavior_change_rate, [], [], [], nsel_mode_val, valLayer);\n')
 			bm.write("mutationWeightList = covModel.constructVar('mutationWeightList');\n\n")
 
 			bm.write('if numel(valLayer) == 1\n')
-			bm.write("    resultPath = ['result/', date, '-', mdl, '_spec_', num2str(spec_i), '_valFL_layer_', num2str(covModel.valLayer(1)), '/'];\n")
+			bm.write("    resultPath = sprintf('result/%s_%d_%d_spec%d', bm, numel(covModel.networkStru), covModel.networkStru(1), spec_i);\n")
 			bm.write('else\n')
-			bm.write("    resultPath = ['result/', date, '-', mdl, '_spec_', num2str(spec_i), '_valFL_layer_', num2str(covModel.valLayer(1)), '-', num2str(covModel.valLayer(end)),'/'];\n")
+			bm.write("    resultPath = sprintf('result/%s_%d_%d_spec%d_%d-%d/', bm, numel(covModel.networkStru), covModel.networkStru(1), spec_i, covModel.valLayer(1), covModel.valLayer(end));\n")
 			bm.write('end\n')
 			bm.write('mkdir(resultPath);\n')
 			bm.write('bugset = bugGenerator(bugset_budget);\n\n')

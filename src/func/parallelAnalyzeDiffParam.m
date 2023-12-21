@@ -17,12 +17,12 @@ function parallelAnalyzeDiffParam(bmCell, bmInfo, maxPercent, dataFolder, transD
         % thresholdArr = autoSelect(bmPath, maxPercent);
         
         actParam = bmInfo{2};
-        actParam{3} = bmInfo{4}{3}(find('sml'==bmInfo{2}{3}(1)));       % tnctime
+        actParam{3} = bmInfo{4}{3}(find('sml'==bmInfo{2}{3}(1)));       % pnatime
         actParam{5} = bmInfo{4}{4}(find('sml'==bmInfo{2}{5}(1)));        % pdtime
         actParam{6} = bmInfo{4}{4}(find('sml'==bmInfo{2}{6}(1)));        % ndtime
         actParam{7} = bmInfo{4}{5}(find('sml'==bmInfo{2}{7}));       % mitime
         actParam{8} = bmInfo{4}{5}(find('sml'==bmInfo{2}{8}));       % mdtime
-        actParam{2} = bmInfo{4}{2}(find('sml'==bmInfo{2}{2}));       % tk_num      
+        actParam{2} = bmInfo{4}{2}(find('sml'==bmInfo{2}{2}));       % itk_num      
         actParam{4} = [bmInfo{4}{3}(find('sml'==bmInfo{2}{4}(1))) bmInfo{4}{2}(find('sml'==bmInfo{2}{4}(2)))];    % ttk_time ttk_num
         actParam{end+1} = [bmInfo{2}{1} bmInfo{2}{3}(2) bmInfo{2}{5}(2) bmInfo{2}{6}(2)];
         
@@ -72,11 +72,11 @@ function parallelAnalyzeDiffParam(bmCell, bmInfo, maxPercent, dataFolder, transD
                     if thIdx == 1
                         for k = 1:3
                             actParam{end+1} = {['auto'],[bmInfo{3}(j)],[bmInfo{4}(j)],[bmInfo{4}(j), bmInfo{3}(j)],[bmInfo{5}(j)],[bmInfo{5}(j)],[bmInfo{6}(j)],[bmInfo{6}(j)]};
-                            fileconfig{end+1} = sprintf('_onlyTTK_%d %d_percent_%.2f', bmInfo{4}(j), bmInfo{3}(k), maxPercent(thIdx));
+                            fileconfig{end+1} = sprintf('_onlyPTK_%d %d_percent_%.2f', bmInfo{4}(j), bmInfo{3}(k), maxPercent(thIdx));
                         end
                     end
                     actParam{end+1} = {['auto'],[bmInfo{3}(j)],[bmInfo{4}(j)],[bmInfo{4}(j), bmInfo{3}(j)],[bmInfo{5}(j)],[bmInfo{5}(j)],[bmInfo{6}(j)],[bmInfo{6}(j)]};
-                    fileconfig{end+1} = sprintf('_NC_auto_TK_%d_TNC_%d auto_TTK_%d %d_PDND_%d auto_MIMD_%d_percent_%.2f', bmInfo{3}(j), bmInfo{4}(j), bmInfo{4}(j), bmInfo{3}(j), bmInfo{5}(j), bmInfo{6}(j), maxPercent(thIdx));
+                    fileconfig{end+1} = sprintf('_INA_auto_ITK_%d_PNA_%d auto_PTK_%d %d_PDND_%d auto_MIMD_%d_percent_%.2f', bmInfo{3}(j), bmInfo{4}(j), bmInfo{4}(j), bmInfo{3}(j), bmInfo{5}(j), bmInfo{6}(j), maxPercent(thIdx));
                 end                
             end
             
