@@ -4,8 +4,8 @@ clc;
 bdclose('all');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-cd /Users/ly/Desktop/TACTICAL 
-addpath(genpath('/Users/ly/Desktop/TACTICAL'));
+cd /[pathtoTACTICAL]
+addpath(genpath('/[pathtoTACTICAL]'));
 automode = 1;   % 1 auto/ 0 manual
 
 % when automode=0, set parameters manually  

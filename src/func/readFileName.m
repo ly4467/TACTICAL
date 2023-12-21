@@ -19,6 +19,3 @@ function [bm, spec, li, i, j, mutate] = readFileName(filename)
     mutateIdx = strfind(filenameNoPath, 'mutate_')+7;
     mutate = str2num(filenameNoPath(mutateIdx));
 end
-
-
-% filenameNoPath = 'AFC_FFNN_trainlm_15_15_15_Apr_1_2020_M_2_1_3_spec_1_bug_2_selflag_0_size_100_mode_allpass_wselmode_all_budget_20_bcr_0.1_Sim_Log'

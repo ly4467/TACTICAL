@@ -88,7 +88,6 @@ function [spsRate, neuronSpsCell] = spstopkAnalyze(all_neuronSpsScoreCell, repTi
                             sucFLMat(end+1) = ismember([li i], randSpsList(:,2:3), 'rows');
                         end
                         neuronSpsList = cat(1, checkArr(:,1:end-1), randSpsList(:,1:end-1));
-                    % 防止出现topk=1，checkArr中有两个分数相同的neuron的类似情况，此情况下randNum<0
                     elseif ~ismember([li i], checkArr(:,2:3), 'rows') && topk <= size(checkArr,1)
                         sucFLMat = zeros(1,repTimes);
                         neuronSpsList = checkArr(1:topk,1:end-1);

@@ -4,8 +4,8 @@ clc;
 bdclose('all');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-cd /Users/ly/Desktop/TACTICAL
-addpath(genpath('/Users/ly/Desktop/TACTICAL'));
+cd /[pathtoTACTICAL]
+addpath(genpath('/[pathtoTACTICAL]'));
 metIdx = 6;     % the metric you want to use. e.g. 6 -> alphaKulczynski2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -208,8 +208,6 @@ for i = 1:numel(rqDir)
     for idx = 1:numel(reg.bmDataCell)
         ptkData{1,i} = cat(2, ptkData{1,i}, reg.bmDataCell{idx}.areaArr(6,4,1));
     end
-
-    % 检查一下对应关系
     ptkData{1,i} = reshape(ptkData{1,i}, [3 3]);
     clear reg
 end
