@@ -56,25 +56,27 @@ function parallelAnalyzeDiffParam(bmCell, bmInfo, maxPercent, dataFolder, transD
             % original codes
             thresholdArr = autoSelect(bmPath, maxPercent);
             for thIdx = 1:numel(maxPercent)
-                if numel(bmInfo{3}) == 3
-                    for j = 1:3
-                        actParam{end+1} = {['auto'],[bmInfo{3}(j)],[bmInfo{4}(j)],[bmInfo{4}(j), bmInfo{3}(j)],[bmInfo{5}(j)],[bmInfo{5}(j)],[bmInfo{6}(j)],[bmInfo{6}(j)]};
-                        fileconfig{end+1} = sprintf('_NC_auto_TK_%d_TNC_%d auto_TTK_%d %d_PDND_%d auto_MIMD_%d_percent_%.2f', bmInfo{3}(j), bmInfo{4}(j), bmInfo{4}(j), bmInfo{3}(j), bmInfo{5}(j), bmInfo{6}(j), maxPercent(thIdx));
+                % if numel(bmInfo{3}) == 3
+                %     for j = 1:3
+                %         actParam{end+1} = {['auto'],[bmInfo{3}(j)],[bmInfo{4}(j)],[bmInfo{4}(j), bmInfo{3}(j)],[bmInfo{5}(j)],[bmInfo{5}(j)],[bmInfo{6}(j)],[bmInfo{6}(j)]};
+                %         fileconfig{end+1} = sprintf('_NC_auto_TK_%d_TNC_%d auto_TTK_%d %d_PDND_%d auto_MIMD_%d_percent_%.2f', bmInfo{3}(j), bmInfo{4}(j), bmInfo{4}(j), bmInfo{3}(j), bmInfo{5}(j), bmInfo{6}(j), maxPercent(thIdx));
+                %     end
+                % elseif numel(bmInfo{3}) == 1
+                %     actParam{end+1} = {['auto'],[bmInfo{3}],[bmInfo{4}],[bmInfo{4}, bmInfo{3}],[bmInfo{5}],[bmInfo{5}],[bmInfo{6}],[bmInfo{6}]};
+                %     fileconfig{end+1} = sprintf('_NC_auto_TK_%d_TNC_%d auto_TTK_%d %d_PDND_%d auto_MIMD_%d_percent_%.2f', bmInfo{3}, bmInfo{4}, bmInfo{4}, bmInfo{3}, bmInfo{5}, bmInfo{6}, maxPercent(thIdx));
+                % else
+                %     error('Please check your actParam')
+                % end 
+
+                for j = 1:3
+                    for k = 1:3
+                        actParam{end+1} = {['auto'],[bmInfo{3}(j)],[bmInfo{4}(j)],[bmInfo{4}(j), bmInfo{3}(k)],[bmInfo{5}(j)],[bmInfo{5}(j)],[bmInfo{6}(j)],[bmInfo{6}(j)]};
+                        fileconfig{end+1} = sprintf('_NC_auto_TK_%d_TNC_%d auto_TTK_%d %d_PDND_%d auto_MIMD_%d_percent_%.2f', bmInfo{3}(j), bmInfo{4}(j), bmInfo{4}(j), bmInfo{3}(k), bmInfo{5}(j), bmInfo{6}(j), maxPercent(thIdx));
                     end
-                elseif numel(bmInfo{3}) == 1
-                    actParam{end+1} = {['auto'],[bmInfo{3}],[bmInfo{4}],[bmInfo{4}, bmInfo{3}],[bmInfo{5}],[bmInfo{5}],[bmInfo{6}],[bmInfo{6}]};
-                    fileconfig{end+1} = sprintf('_NC_auto_TK_%d_TNC_%d auto_TTK_%d %d_PDND_%d auto_MIMD_%d_percent_%.2f', bmInfo{3}, bmInfo{4}, bmInfo{4}, bmInfo{3}, bmInfo{5}, bmInfo{6}, maxPercent(thIdx));
-                else
-                    error('Please check your actParam')
-                end 
+                    actParam{end+1} = {['auto'],[bmInfo{3}(j)],[bmInfo{4}(j)],[bmInfo{4}(j), bmInfo{3}(j)],[bmInfo{5}(j)],[bmInfo{5}(j)],[bmInfo{6}(j)],[bmInfo{6}(j)]};
+                    fileconfig{end+1} = sprintf('_NC_auto_TK_%d_TNC_%d auto_TTK_%d %d_PDND_%d auto_MIMD_%d_percent_%.2f', bmInfo{3}(j), bmInfo{4}(j), bmInfo{4}(j), bmInfo{3}(j), bmInfo{5}(j), bmInfo{6}(j), maxPercent(thIdx));
+                end
             end
-    
-            % % delete this after TTK 
-            % for j = 1:3
-            %     actParam{end+1} = {[0],[bmInfo{3}(j)],[bmInfo{4} 0],[bmInfo{4}, bmInfo{3}(j)],[bmInfo{5}(j) 0],[bmInfo{5}(j) 0],[bmInfo{6}(j)],[bmInfo{6}(j)]};
-            %     fileconfig{end+1} = sprintf('_NC_0_TK_%d_TNC_%d 0_TTK_%d %d_PDND_%d 0_MIMD_%d', bmInfo{3}(j), bmInfo{4}, bmInfo{4}, bmInfo{3}(j), bmInfo{5}(j), bmInfo{6}(j));
-            %     thresholdArr = [];
-            % end
             
             % analyzing
             diffTopkAnalyze(bmPath, fileconfig, actParam, randTimes, nnStru, bmName, thresholdArr, 1);

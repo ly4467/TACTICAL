@@ -3,13 +3,13 @@ classdef CovFL < handle
         % model info
         bm              % benchmark
         mdl             % the model with problematic NN controller
-        D               % dataset with test suite, for fault localization，测试集
+        D               % dataset with test suite, for fault localization
         D_run
         is_nor
         T
         Ts
-        t_span_num          % time span of signals 0~50s,0.1s上一共有501个监视系统的时间点，t_span_num=501
-        T_suit_num          % Test suit中信号的个数
+        t_span_num          % time span of signals 0~50s
+        T_suit_num          % signal numbers in test suite
 
         % nn parameters
         net             % neural network controller
@@ -17,14 +17,13 @@ classdef CovFL < handle
         layerNum       % the number of hidden layers (does not include output layer)
         weight          % weight of hidden layers and output layer stored as a cell array according to the layer index
         bias            % bias of hidden layers and output layer stored as a cell array according to the layer index
-        act             % 存储着每个neuron的激活情况，根据falsifai的公式判断是否激活
 
         % config of input signal of model
         in_name         % input signal of the model
         in_range        % the range of input signal
         in_span         % the time span of input signal
         % config of input signal of controller
-        icc_name        % input constant of controller,这些直接写在phi的条件里面
+        icc_name        % input constant of controller
         ics_name        % input signal of controller
         ic_const        % input constant value of controller
         % config of output signal of controller
@@ -34,7 +33,7 @@ classdef CovFL < handle
         % specification
         phi
         phi_str 
-        sig_str         % 要监视的对象，是否符合phi，例如两个车的距离
+        sig_str         
         spec_i
 
         % parameters of fault localization
@@ -152,10 +151,7 @@ classdef CovFL < handle
             Br = BreachSimulinkSystem(mdl);
             Br.Sys.tspan = 0:this.Ts:this.T;
             
-            % 注意，这里需要根据不同的benchmark进行调整
-            % 代表输入信号是同步的，一样的采样间隔，记得检查不同的benchmark的in_span查看是否一致
-            % 例如AFC的in_span=[6 6]代表两个信号采用的都是6的采样间隔，属于同步信号
-            % 如果不一致需要采用VarStep异步措施，参照下面的代码
+            % unistep signal   
             input_gen.cp = this.T/this.in_span{1};      
             input_gen.type = 'UniStep';
             Br.SetInputGen(input_gen);
@@ -167,7 +163,7 @@ classdef CovFL < handle
                 end
             end
             
-            % % 包含异步信号的措施
+            % % varstep signal
             % if length(unique(this.in_span)) == 1
             %     con_type = 'UniStep';
             %     input_gen.cp = this.T/this.in_span(1,1);
@@ -201,11 +197,10 @@ classdef CovFL < handle
 
             % extract ic signal and oc signal for forward impact analysis
             % (analysis the impact of a neural weight to the final result)
-            ic_sig_val = sigMatch(Br, this.ics_name);   % ACC中是返回实际传入NN控制器的3个信号，在0～50s上的每0.1s的值，3*501
-            oc_sig_val = sigMatch(Br, this.oc_name);    % return the actual output_signal (the real signal not the name) of nn before repaired, ACC中是返回实际传出NN控制器的1个信号，1*501
+            ic_sig_val = sigMatch(Br, this.ics_name);   
+            oc_sig_val = sigMatch(Br, this.oc_name);    % return the actual output_signal (the real signal not the name) of nn before repaired
             
-            % 仅ACC传入NN的信号是需要经过规范化的，缩放到0~1的范围内，其他benchmark都不需要
-            % 同理，ACC的NN传出的信号也需要经过反向放大
+            % normalization
             if this.is_nor == 1
                 x_gain = this.D_run.ps_x.gain;
                 x_gain = diag(x_gain);
@@ -245,10 +240,10 @@ classdef CovFL < handle
                 scan_interval(1, LR(1,1)+1:LR(1,2)+1) = 1;
             end
 
-            if strcmp(this.bm, 'ACC') && spec_i == 1            % 在写自己的论文代码时候这里需要修改每个情况！！！
+            if strcmp(this.bm, 'ACC') && spec_i == 1            
                 left_neg_interval = sigMatch(Br, "d_rel") - 1.4 * sigMatch(Br, "v_ego") < 10;
                 right_neg_interval = sigMatch(Br, "v_ego") > 30.1;
-                neg_idx = (left_neg_interval + right_neg_interval > 0);     % 这里是监视每个时间点上每个点的监视对象的值是否符合phi，一旦不符合就把那个时间点上标记为1
+                neg_idx = (left_neg_interval + right_neg_interval > 0);    
                 neg_interval(1, neg_idx) = 1;
             elseif strcmp(this.bm, 'ACC') && spec_i == 2
                 delta = sigMatch(Br, "d_rel") - 1.4 * sigMatch(Br, "v_ego");
@@ -301,9 +296,8 @@ classdef CovFL < handle
             nn_hidden_out = cell(this.t_span_num, this.layerNum);
             output = cell(this.t_span_num, 1);
 
-            % 计算运行信号时候的中间层每个neuron的输出值,保存在nn_hidden_out和output中
-            % nn_hidden_out为501*3个cell，每个cell为30*1，代表0到50s上501个时间节点上每层隐藏层30个neuron的输出
-            % output为501*1，包含501个时间点上output neuron的输出值
+            % compute all neurons output during the execution of each signal
+            % and save them into variable nn_hidden_out, output
             for j = 1: this.t_span_num
                 for i = 1: this.net.numLayers
                     if i == 1
@@ -327,7 +321,7 @@ classdef CovFL < handle
         function [sig_state, sig_stateAll, mutate, bugWeight, sig_success_rate, bug_mdl] = singleWeightMutate(this, bug, bugRealIdx, li, i, j, tsf_size)
 
             this.weight{li}(i,j) = this.weight{li}(i,j) + bug;
-            bugWeight = this.weight{li}(i,j);     % bugbias保存着每个neuron，植入bug之后的bias
+            bugWeight = this.weight{li}(i,j);
         
             % buggy model name
             bug_mdl = sprintf('%s_spec%d_M_%d_%d_%d_bug%d', this.bm, this.spec_i, li, i, j, bugRealIdx);
@@ -346,7 +340,7 @@ classdef CovFL < handle
             end
             
             try
-                this.weight{li}(i,j) = this.net.LW{li,li-1}(i,j);   % 恢复nn原来植入bug之前的参数
+                this.weight{li}(i,j) = this.net.LW{li,li-1}(i,j);   % return model's nn into orignal parameters
             catch
                 msg = sprintf('this.weight{li}(i,j) = this.net.LW{li,li-1}(i,j) Error!\n   bugmdl:%s   position: %d_%d_%d,  signal: %d', bug_mdl, li, i, j, sig);
                 error(msg)                
@@ -356,7 +350,9 @@ classdef CovFL < handle
         end
         
         function [mutate, sig_success_rate, sigstateNew] = sigAnalyze(this, sig_state)
-            mutArr = zeros(2, numel(sig_state));    % 用于保存所有信号植入bug后sim的rob(line1)，taus(line2)信息
+
+            % save all robustness and taus information
+            mutArr = zeros(2, numel(sig_state));
             sigstateNew = {};
             for sig = 1:numel(sig_state)
                 mutArr(1, sig) = sig_state{sig}.rob;
@@ -365,7 +361,7 @@ classdef CovFL < handle
                     sigstateNew{end+1} = sig_state{sig};
                 end
             end
-            mutArr(:, mutArr(2,:)<1) = [];      % 删除tau_s<1的信号
+            mutArr(:, mutArr(2,:)<1) = [];
 
             if size(mutArr,2) < 20
                 mutate = 0;
@@ -374,7 +370,7 @@ classdef CovFL < handle
             end
             sig_success_rate = sum(mutArr(1,:)>=0)/size(mutArr,2);
             
-            % mutation info: 1: mutate成功，0: mutate失败
+            % mutation info: 1: mutation success，0: mutation failed
             if (sig_success_rate<=this.behavior_change_rate(2)) && (sig_success_rate>=this.behavior_change_rate(1))
                 mutate = 1;
             else
@@ -414,7 +410,7 @@ classdef CovFL < handle
 
             for bugidx = 1:numel(bugset) 
                 bug = bugset(bugidx);
-                [sig_state, sig_stateAll, mutate, bugWeight, sig_success_rate, bug_mdl] = this.singleWeightMutate(bug, bugidx, li, i, j, this.T_suit_num);
+                [sig_state, sig_stateAll, mutate, bugWeight, sig_success_rate, bug_mdl] = this.singleWeightMutate(normrnd(bug,1), bugidx, li, i, j, this.T_suit_num);
                 if (sig_success_rate<this.behavior_change_rate(1)) || mutate
                     break
                 end

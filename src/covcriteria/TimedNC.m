@@ -38,7 +38,7 @@ function [TimedNC_activated_neurons] = TimedNC(nn_hidden_out, t_interval, activa
             % if one neuron is activated now,its corresponding time add 1
             position_activated = (nn_hidden_out{i,j} > activation_threshold);
             tempHiddenOut{1,j}(position_activated) = tempHiddenOut{1,j}(position_activated) + 1;
-            % 这块可能有bug
+
             % tempHiddenOut >= t_interval and this neuron isn't activated at this time 
             position_true = (tempHiddenOut{1,j} >= t_interval & (nn_hidden_out{i,j} <= activation_threshold | i == r_size) );  
             TimedNC_activated_neurons{1,j}(position_true) =  TimedNC_activated_neurons{1,j}(position_true) + 1;

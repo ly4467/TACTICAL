@@ -159,7 +159,7 @@ for phi_i in range(len(phi_str)):
 
 		with open('scripts/'+filename,'w+') as bm:
 			bm.write('#!/bin/sh\n')
-			bm.write('export PATH=/home/ubuntu/MATLAB/R2021b/bin/:$PATH\n')
+			# bm.write('export PATH=/home/ubuntu/MATLAB/R2021b/bin/:$PATH\n')
 			bm.write('csv=$1\n')
 			bm.write('matlab -nodesktop -nosplash <<EOF\n\n')
 			bm.write('clear;\n')
@@ -264,7 +264,7 @@ for phi_i in range(len(phi_str)):
 			bm.write("    resultPath = ['result/', date, '-', mdl, '_spec_', num2str(spec_i), '_valFL_layer_', num2str(covModel.valLayer(1)), '-', num2str(covModel.valLayer(end)),'/'];\n")
 			bm.write('end\n')
 			bm.write('mkdir(resultPath);\n')
-			bm.write('bugset = bugGenerator(bugset_budget,2);\n\n')
+			bm.write('bugset = bugGenerator(bugset_budget);\n\n')
 
 			bm.write('sig_state = cell(1,T_suit_num);\n')
 			bm.write('for sig = 1:T_suit_num\n')

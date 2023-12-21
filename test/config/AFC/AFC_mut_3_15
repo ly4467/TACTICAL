@@ -6,12 +6,12 @@ T_suit_num 1
 100
 bugset_budget 1
 20
+############################################## 
+
 nsel_mode_val 1
 all
 valLayer 1
 2 3
-############################################## 
-
 model 1
 AFC_FFNN_trainlm_15_15_15_Apr_1_2020_M
 bench 1

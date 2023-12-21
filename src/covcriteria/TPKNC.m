@@ -30,7 +30,7 @@ function [TPKNC_activated_neurons] = TPKNC(nn_hidden_out, K)
         for j = 1:c_size
             layerHiddenOutArray = cell2mat(nn_hidden_out(i,j)');
             layerHiddenOutArray = sort(layerHiddenOutArray,'descend');
-            kth = layerHiddenOutArray(K+1,1);                   % 这里选取k+1的neuron的输出值作为最小的，可以防止很多neuron输出值为0，整个一层的neuron都被判定为激活
+            kth = layerHiddenOutArray(K+1,1);   
             tempHiddenOut{1,j}(nn_hidden_out{i,j} > kth) = 1;   % nn_hidden_out{i,j} >= kth ----> nn_hidden_out{i,j} > kth
             TPKNC_activated_neurons{1,j} = TPKNC_activated_neurons{1,j} + tempHiddenOut{1,j};
             tempHiddenOut{1,j} = zeros(size(tempHiddenOut{1,j}));
