@@ -6,7 +6,7 @@ This repository reports the code and the benchmarks for the paper "Tactical: Fau
 
 Modern cyber-physical systems (CPS) are evolving to integrate deep neural networks (DNNs) as controllers, leading to the emergence of AI-enabled CPSs. However, an inadequately trained DNN controller may produce incorrect control decisions, exposing the systems to huge safety risks. To prevent unsafe behaviors from happening, it is crucial to localize the faulty neurons in DNN controllers, thereby providing valuable references for further system re-engineering. However, since unsafe system behaviors typically arise from a sequence of control decisions, establishing a connection between faulty neurons and unsafe behaviors is extremely challenging. To tackle this problem, we propose TACTICAL that localizes the faults in AI-enabled CPS by exploiting neuron activation criteria that incorporate temporal aspects of DNN controller inferences. Based on the executions of test cases, we construct a spectrum for each neuron, which records the information including the specification satisfaction of each system execution and the activation status of the neuron in the system execution. Having the spectra of all neurons, we apply existing suspiciousness metrics to compute a suspiciousness score for each neuron, by which we select the most suspicious ones. We experimentally evaluate TACTICAL on 12 AI-enabled CPS benchmarks spanning over different domains, by injecting artificial faults into their DNN controllers. The results shows the effectiveness of TACTICAL, based on comparisons with a baseline approach and over different configurations. Moreover, we study the influence of hyperparameters to the effectiveness of TACTICAL, and thereby provide suggestions on hyperparameter selection.
 
-<div align=center><img width="90%" height="90%" src="figs/workflow.png"></div>
+<div align=center><img width="80%" height="80%" src="figs/workflow.png"></div>
 
 ## Folder Structure Conventions
 
@@ -140,7 +140,6 @@ Modern cyber-physical systems (CPS) are evolving to integrate deep neural networ
 │    │   └── transData.m
 │    └── util
 │        ├── neuronPlot.m
-│        ├── parallelAnalyzeDiffParam.m
 │        └── ratePlotBar.m
 └── test
     ├── FL.py
