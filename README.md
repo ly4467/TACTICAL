@@ -188,3 +188,38 @@ How to reproduce the experimental results
 - After all benchmarks mutation processed, open the `src/RQ1part1.m` by using matlab. Users can change the path of data or the auto mode into manual mode, and run the analyzing progress. First, set `automode=1` in the `src/RQ1part1.m` file and run the analysis. All temporary data files are in the `result/[benchmarkdataname]/transDataProcessed`.
 - After completing the previous step of analysis, open `src/RQ2.m`, set the selected metric and run it. The running results will be saved in the `result/RQ2Data_[metric name].mat` file. After reading this file, manually fill in the data in the `RQ2percentage.xlsx` file to obtain the results of RQ2 in the paper, and then select the best set of parameters for each benchmark.
 - Use the parameters selected in the previous step to manually set and run in the `src/RQ1part1.m` file, set `automode=0`, and obtain the results of each benchmark in the paper RQ1.1 in `result/[benchmarkdataname]/transDataProcessed/[configs]_topkAnalyze`. Rename the `.mat` files in the directory to the same name as the benchmark and put them in one directory, e.g. `ACC_4_10_spec1.mat`. Run the `src/RQ1part2_RQ3.m` file to get the results of RQ1.2 and RQ3.
+
+## Extended experimental results
+
+### RQ1
+
+According to the description in RQ3 of the paper, "We also observe that Kulczynski2 and D* exhibit the best performance, as both of them outperform other metrics in at least 50% of the cases." Due to paper space limitations, only results of the D* metric in RQs are displayed, we also want to display results of Kulczynski2，hereinafter referred to as "Ku2". The following are the RQ1 results of Ku2.
+
+<center class="half">
+<img src="figs/RQ1_ku2/ACC_1_spec1_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1_ku2/ACC_1_spec1_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1_ku2/ACC_2_spec1_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1_ku2/ACC_2_spec2_alphaKulczynski2.jpg" width="20%"/>
+</center>
+
+<center class="half">
+<img src="figs/RQ1_ku2/AFC_1_spec3_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1_ku2/AFC_1_spec4_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1_ku2/AFC_2_spec3_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1_ku2/AFC_2_spec4_alphaKulczynski2.jpg" width="20%"/>
+</center>
+
+<center class="half">
+<img src="figs/RQ1_ku2/WT_1_spec5_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1_ku2/WT_2_spec5_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1_ku2/SC_1_spec6_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1_ku2/SC_2_spec6_alphaKulczynski2.jpg" width="20%"/>
+</center>
+
+
+### RQ2
+
+The following is the result table compiled by RQ2 under Kulczynski2's metric.<br>
+It can be seen from these results that the difference between D* and Ku2 is not very big, and both can help users accurately locate errors and obtain better results.
+
+<div align=center><img width="80%" height="80%" src="figs/RQ2ku2_table.png"></div>
