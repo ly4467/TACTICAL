@@ -48,18 +48,9 @@ How to reproduce the experimental results
 ├── RQ2percentage.xlsx
 ├── benchmarks
 │    ├── ACC
-│    │   ├── ACC_4_10
-│    │   ├── ACC_vl_28_ve_22_spec_1_FFNN_trainscg_15_15_15_Nor_Sat_Feb_7
 │    ├── AFC
-│    │   ├── AFC_3_15_TSE
-│    │   └── AFC_4_15_TSE
 │    ├── SC
-│    │   ├── SC_FFNN_trainlm_10_10_10_10_Dec_8
-│    │   ├── SC_FFNN_trainlm_15_15_15_15_Dec_8
-│    │   └── SC_Trad
 │    └── WT
-│        ├── WT_error_086_spec_1_FFNN_trainbfg_15_15_15_Dec_22
-│        └── WT_error_086_spec_1_FFNN_trainbfg_5_5_5_Dec_22
 ├── breach
 ├── result
 ├── src
