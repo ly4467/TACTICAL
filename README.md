@@ -8,7 +8,7 @@ Modern cyber-physical systems (CPS) are evolving to integrate deep neural networ
 
 <div align=center><img width="80%" height="80%" src="figs/workflow.png"></div>
 
-## Folder Structure Conventions
+## Repository Structure
 
 ```
 .
@@ -17,93 +17,17 @@ Modern cyber-physical systems (CPS) are evolving to integrate deep neural networ
 ├── benchmarks
 │    ├── ACC
 │    │   ├── ACC_4_10
-│    │   │    ├── dataset
-│    │   │    │   ├── ACC_vl_28_ve_22_spec_1_FFNN_trainlm_10_10_10_10_Nor_Sat_Feb_15_Tr.mat
-│    │   │    │   └── ACC_vl_28_ve_22_spec_2_FFNN_trainlm_10_10_10_10_Nor_Sat_Feb_15_Tr.mat
-│    │   │    └── model
-│    │   │        ├── ACC_FFNN_trainlm_10_10_10_10_Nor_Sat_Feb_15.slx
-│    │   │        ├── ACC_FFNN_trainlm_10_10_10_10_Nor_Sat_Feb_15_M.slx
-│    │   │        └── config&controller
-│    │   │            ├── ACC_FFNN_trainlm_10_10_10_10_Nor_config_Feb_15.mat
-│    │   │            └── ACC_FFNN_trainlm_10_10_10_10_Nor_controller_Feb_15.slx
 │    │   ├── ACC_vl_28_ve_22_spec_1_FFNN_trainscg_15_15_15_Nor_Sat_Feb_7
-│    │   │    └── model
-│    │   │        ├── ACC_FFNN_trainscg_15_15_15_Nor_Sat_Feb_7.slx
-│    │   │        ├── ACC_FFNN_trainscg_15_15_15_Nor_Sat_Feb_7_M.slx
-│    │   │        └── config&controller
-│    │   │            ├── ACC_FFNN_trainscg_15_15_15_Nor_config_Feb_7.mat
-│    │   │            └── ACC_FFNN_trainscg_15_15_15_Nor_controller_Feb_7.slx
-│    │   └── ACCdataset
-│    │       ├── ACC_vl_28_ve_22_ddefault_105_spec_1_Orig_Feb_7_Tr.mat
-│    │       ├── ACC_vl_28_ve_22_spec_1_FFNN_trainscg_15_15_15_Nor_Sat_Feb_7_Tr.mat
-│    │       ├── ACC_vl_28_ve_22_spec_2_FFNN_trainscg_15_15_15_Nor_Sat_Feb_7_Tr.mat
-│    │       ├── Nor_ACC_vl_28_ve_22_ddefault_105_spec_1_Orig_Feb_7_Tr.mat
-│    │       └── Nor_ACC_vl_28_ve_22_ddefault_20_spec_1_Orig_Feb_7_Tr.mat
 │    ├── AFC
 │    │   ├── AFC_3_15_TSE
-│    │   │    ├── dataset
-│    │   │    │   ├── AFC_mu_020_spec_1_FFNN_trainlm_15_15_15_UnNor_May_15_2022_Tr.mat
-│    │   │    │   └── AFC_mu_020_spec_2_FFNN_trainlm_15_15_15_UnNor_May_15_2022_Tr.mat
-│    │   │    └── model
-│    │   │        ├── AFC_FFNN_trainlm_15_15_15_Apr_1_2020.slx
-│    │   │        ├── AFC_FFNN_trainlm_15_15_15_Apr_1_2020_M.slx
-│    │   │        └── config&controller
-│    │   │            └── AFC_FFNN_trainlm_15_15_15_UnNor_config_Apr_1_2020.mat
 │    │   └── AFC_4_15_TSE
-│    │       ├── dataset
-│    │       │    ├── AFC_mu_020_spec_1_FFNN_trainlm_15_15_15_15_UnNor_May_15_2022_Tr.mat
-│    │       │    └── AFC_mu_020_spec_2_FFNN_trainlm_15_15_15_15_UnNor_May_15_2022_Tr.mat
-│    │       └── model
-│    │           ├── AFC_FFNN_trainlm_15_15_15_15_Apr_1_2020.slx
-│    │           ├── AFC_FFNN_trainlm_15_15_15_15_Apr_1_2020_M.slx
-│    │           └── config&controller
-│    │               └── AFC_FFNN_trainlm_15_15_15_15_UnNor_config_Apr_1_2020.mat
 │    ├── SC
 │    │   ├── SC_FFNN_trainlm_10_10_10_10_Dec_8
-│    │   │    ├── dataset
-│    │   │    │   └── SC_FFNN_trainlm_10_10_10_10_Dec_8_spec_1_Tr.mat
-│    │   │    └── model
-│    │   │        ├── SC_FFNN_trainlm_10_10_10_10_Dec_8.slx
-│    │   │        ├── SC_FFNN_trainlm_10_10_10_10_Dec_8_M.slx
-│    │   │        └── config&controller
-│    │   │            ├── SC_FFNN_trainlm_10_10_10_10_config_Dec_8.mat
-│    │   │            └── SC_FFNN_trainlm_10_10_10_10_controller_Dec_8.slx
 │    │   ├── SC_FFNN_trainlm_15_15_15_15_Dec_8
-│    │   │    ├── dataset
-│    │   │    │   └── SC_FFNN_trainlm_15_15_15_15_Dec_8_spec_1_Tr.mat
-│    │   │    └── model
-│    │   │        ├── SC_FFNN_trainlm_15_15_15_15_Dec_8.slx
-│    │   │        ├── SC_FFNN_trainlm_15_15_15_15_Dec_8_M.slx
-│    │   │        └── config&controller
-│    │   │            ├── SC_FFNN_trainlm_15_15_15_15_config_Dec_8.mat
-│    │   │            └── SC_FFNN_trainlm_15_15_15_15_controller_Dec_8.slx
 │    │   └── SC_Trad
-│    │       ├── dataset
-│    │       │    ├── SC_RNN_22_spec_1_Dec_8_Te.mat
-│    │       │    └── SC_RNN_22_spec_1_Dec_8_Tr.mat
-│    │       └── model
-│    │           └── steamcondense_RNN_22.slx
 │    └── WT
 │        ├── WT_error_086_spec_1_FFNN_trainbfg_15_15_15_Dec_22
-│        │   ├── dataset
-│        │   │    ├── WT_error_086_spec_1_FFNN_trainbfg_15_15_15_Dec_22_Te.mat
-│        │   │    └── WT_error_086_spec_1_FFNN_trainbfg_15_15_15_Dec_22_Tr.mat
-│        │   └── model
-│        │       ├── WT_FFNN_trainbfg_15_15_15_Dec_22.slx
-│        │       ├── WT_FFNN_trainbfg_15_15_15_Dec_22_M.slx
-│        │       └── config&controller
-│        │           ├── WT_FFNN_trainbfg_15_15_15_config_Dec_22.mat
-│        │           └── WT_FFNN_trainbfg_15_15_15_controller_Dec_22.slx
 │        └── WT_error_086_spec_1_FFNN_trainbfg_5_5_5_Dec_22
-│            ├── dataset
-│            │   ├── WT_error_086_spec_1_FFNN_trainbfg_5_5_5_Dec_22_Te.mat
-│            │   └── WT_error_086_spec_1_FFNN_trainbfg_5_5_5_Dec_22_Tr.mat
-│            └── model
-│                ├── WT_FFNN_trainbfg_5_5_5_Dec_22.slx
-│                ├── WT_FFNN_trainbfg_5_5_5_Dec_22_M.slx
-│                └── config&controller
-│                    ├── WT_FFNN_trainbfg_5_5_5_config_Dec_22.mat
-│                    └── WT_FFNN_trainbfg_5_5_5_controller_Dec_22.slx
 ├── breach
 ├── result
 ├── src
@@ -195,26 +119,26 @@ How to reproduce the experimental results
 
 According to the description in RQ3 of the paper, "We also observe that Kulczynski2 and D* exhibit the best performance, as both of them outperform other metrics in at least 50% of the cases." Due to paper space limitations, only results of the D* metric in RQs are displayed, we also want to display results of Kulczynski2，hereinafter referred to as "Ku2". The following are the RQ1 results of Ku2.
 
-<center class="half">
-<img src="figs/RQ1_ku2/ACC_1_spec1_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/ACC_1_spec1_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/ACC_2_spec1_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/ACC_2_spec2_alphaKulczynski2.jpg" width="20%"/>
-</center>
+<p float="left">
+<img src="figs/RQ1_ku2/ACC_1_spec1_alphaKulczynski2.jpg" width="24%"/>
+<img src="figs/RQ1_ku2/ACC_1_spec1_alphaKulczynski2.jpg" width="24%"/>
+<img src="figs/RQ1_ku2/ACC_2_spec1_alphaKulczynski2.jpg" width="24%"/>
+<img src="figs/RQ1_ku2/ACC_2_spec2_alphaKulczynski2.jpg" width="24%"/>
+</p>
 
-<center class="half">
-<img src="figs/RQ1_ku2/AFC_1_spec3_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/AFC_1_spec4_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/AFC_2_spec3_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/AFC_2_spec4_alphaKulczynski2.jpg" width="20%"/>
-</center>
+<p float="left">
+<img src="figs/RQ1_ku2/AFC_1_spec3_alphaKulczynski2.jpg" width="24%"/>
+<img src="figs/RQ1_ku2/AFC_1_spec4_alphaKulczynski2.jpg" width="24%"/>
+<img src="figs/RQ1_ku2/AFC_2_spec3_alphaKulczynski2.jpg" width="24%"/>
+<img src="figs/RQ1_ku2/AFC_2_spec4_alphaKulczynski2.jpg" width="24%"/>
+</p>
 
-<center class="half">
-<img src="figs/RQ1_ku2/WT_1_spec5_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/WT_2_spec5_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/SC_1_spec6_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/SC_2_spec6_alphaKulczynski2.jpg" width="20%"/>
-</center>
+<p float="left">
+<img src="figs/RQ1_ku2/WT_1_spec5_alphaKulczynski2.jpg" width="24%"/>
+<img src="figs/RQ1_ku2/WT_2_spec5_alphaKulczynski2.jpg" width="24%"/>
+<img src="figs/RQ1_ku2/SC_1_spec6_alphaKulczynski2.jpg" width="24%"/>
+<img src="figs/RQ1_ku2/SC_2_spec6_alphaKulczynski2.jpg" width="24%"/>
+</p>
 
 
 ### RQ2
