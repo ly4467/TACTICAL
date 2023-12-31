@@ -45,62 +45,76 @@ How to reproduce the experimental results
 ├── README.md
 ├── RQ2percentage.xlsx
 ├── benchmarks
-│    ├── ACC
-│    ├── AFC
-│    ├── SC
-│    └── WT
-├── breach
+│        ├── ACC
+│        ├── AFC
+│        ├── SC
+│        └── WT
+├── figs
+│        ├── RQ1
+│        │   ├── RQ1_Dstar
+│        │   ├── RQ1_Jaccard
+│        │   ├── RQ1_Ochiai
+│        │   ├── RQ1_Tarantula
+│        │   ├── RQ1_allmetallsps_20p
+│        │   ├── RQ1_bar
+│        │   ├── RQ1_ku1
+│        │   └── RQ1_ku2
+│        ├── RQ2
+│        ├── RQ3
+│        ├── comparetoRandBar.m
+│        ├── valRate.m
+│        └── workflow.png
 ├── result
 ├── src
-│    ├── CovFL.m
-│    ├── RQ1part1.m
-│    ├── RQ1part2_RQ3.m
-│    ├── RQ2.m
-│    ├── covcriteria
-│    │   ├── MDNC.m
-│    │   ├── MINC.m
-│    │   ├── NC.m
-│    │   ├── NDNC.m
-│    │   ├── PDNC.m
-│    │   ├── TPKNC.m
-│    │   ├── TTK.m
-│    │   └── TimedNC.m
-│    ├── func
-│    │   ├── autoSelect.m
-│    │   ├── bugGenerator.m
-│    │   ├── diffTopkAnalyze.m
-│    │   ├── insertWeightBug.m
-│    │   ├── nnresultEval.m
-│    │   ├── parallelAnalyzeDiffParam.m
-│    │   ├── parsaveFLinfo.m
-│    │   ├── parsaveMutInfo.m
-│    │   ├── plotTopkAnalyze.m
-│    │   ├── processBestData.m
-│    │   ├── randFL.m
-│    │   ├── readFileName.m
-│    │   ├── sigMatch.m
-│    │   ├── spsCalculator.m
-│    │   ├── spsScoreCompute.m
-│    │   ├── spstopkAnalyze.m
-│    │   └── transData.m
-│    └── util
-│        ├── neuronPlot.m
-│        └── ratePlotBar.m
+│        ├── CovFL.m
+│        ├── RQ1part1.m
+│        ├── RQ1part2_RQ3.m
+│        ├── RQ2.m
+│        ├── covcriteria
+│        │   ├── MDNC.m
+│        │   ├── MINC.m
+│        │   ├── NC.m
+│        │   ├── NDNC.m
+│        │   ├── PDNC.m
+│        │   ├── TPKNC.m
+│        │   ├── TTK.m
+│        │   └── TimedNC.m
+│        ├── func
+│        │   ├── autoSelect.m
+│        │   ├── bugGenerator.m
+│        │   ├── diffTopkAnalyze.m
+│        │   ├── insertWeightBug.m
+│        │   ├── nnresultEval.m
+│        │   ├── parallelAnalyzeDiffParam.m
+│        │   ├── parsaveFLinfo.m
+│        │   ├── parsaveMutInfo.m
+│        │   ├── plotTopkAnalyze.m
+│        │   ├── processBestData.m
+│        │   ├── randFL.m
+│        │   ├── readFileName.m
+│        │   ├── sigMatch.m
+│        │   ├── spsCalculator.m
+│        │   ├── spsScoreCompute.m
+│        │   ├── spstopkAnalyze.m
+│        │   └── transData.m
+│        └── util
+│            ├── neuronPlot.m
+│            └── ratePlotBar.m
 └── test
     ├── FL.py
     ├── config
-    │    ├── ACC
-    │    │   ├── ACC_mut_3_15
-    │    │   └── ACC_mut_4_10
-    │    ├── AFC
-    │    │   ├── AFC_mut_3_15
-    │    │   └── AFC_mut_4_15
-    │    ├── SC
-    │    │   ├── SC_mut_4_10
-    │    │   └── SC_mut_4_15
-    │    └── WT
-    │        ├── WT_mut_3_15
-    │        └── WT_mut_3_5
+    │        ├── ACC
+    │        │   ├── ACC_mut_3_15
+    │        │   └── ACC_mut_4_10
+    │        ├── AFC
+    │        │   ├── AFC_mut_3_15
+    │        │   └── AFC_mut_4_15
+    │        ├── SC
+    │        │   ├── SC_mut_4_10
+    │        │   └── SC_mut_4_15
+    │        └── WT
+    │            ├── WT_mut_3_15
+    │            └── WT_mut_3_5
     └── valFL.py
 ```
 
