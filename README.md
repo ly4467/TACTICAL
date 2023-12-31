@@ -191,35 +191,63 @@ How to reproduce the experimental results
 
 ## Extended experimental results
 
-### RQ1
+### RQ1: Does Tactical effectively localize the faulty neurons in an AI-enabled CPS?
+
+This RQ aims to explore whether the TACTICAL method can successfully capture neurons with errors. Here is a supplementary histogram comparing this method with the random method to more intuitively display the effect. Under each different benchmark, a set of parameters most suitable for this application scenario are used for comparison, tops uses the top 20% number of neurons. Consistent with the paper, D* is used as the metric. If you need to get the code for the following histogram, you can get it by running the `figs/comparetoRandBar.m` file. <br>
+It can be seen from the figure that under the conditions of the first 20% of screening, this method has great advantages over random in most cases, which illustrates the effectiveness of the method on the other hand. <br>
+In some cases, particularly in the benchmark of AFC#2_phi3, the expected results were not achieved satisfactorily. Specifically, concerning the identification of faulty neurons, the criteria employed by PTK and MD still demonstrated suboptimal performance, with recognition rates approaching randomness. Through experimentation, it was observed that this discrepancy arose from the utilization of different neural network controllers in various benchmarks, each exhibiting distinct output characteristics. During the output process, these characteristics did not entirely align with the behavioral features defined by each criterion. Future research endeavors will focus on exploring more effective criteria based on these diverse output characteristics, aiming to pinpoint error occurrences and enhance the ability of criteria to better elucidate the behavioral patterns of AI controllers, improve the accuracy of fault localization.
+
+<center class="half">
+<img src="figs/RQ1/RQ1_bar/ACC_3_15_spec1.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/ACC_3_15_spec2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/ACC_4_10_spec1.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/ACC_4_10_spec2.jpg" width="20%"/>
+</center>
+
+<center class="half">
+<img src="figs/RQ1/RQ1_bar/AFC_3_15_spec3.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/AFC_3_15_spec4.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/AFC_4_15_spec3.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/AFC_4_15_spec4.jpg" width="20%"/>
+</center>
+
+<center class="half">
+<img src="figs/RQ1/RQ1_bar/WT_3_5_spec5.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/WT_3_15_spec5.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/SC_4_10_spec6.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/SC_4_15_spec6.jpg" width="20%"/>
+</center>
 
 According to the description in RQ3 of the paper, "We also observe that Kulczynski2 and D* exhibit the best performance, as both of them outperform other metrics in at least 50% of the cases." Due to paper space limitations, only results of the D* metric in RQs are displayed, we also want to display results of Kulczynski2，hereinafter referred to as "Ku2". The following are the RQ1 results of Ku2.
 
 <center class="half">
-<img src="figs/RQ1_ku2/ACC_1_spec1_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/ACC_1_spec1_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/ACC_2_spec1_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/ACC_2_spec2_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/ACC_1_spec1_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/ACC_1_spec1_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/ACC_2_spec1_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/ACC_2_spec2_alphaKulczynski2.jpg" width="20%"/>
 </center>
 
 <center class="half">
-<img src="figs/RQ1_ku2/AFC_1_spec3_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/AFC_1_spec4_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/AFC_2_spec3_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/AFC_2_spec4_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/AFC_1_spec3_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/AFC_1_spec4_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/AFC_2_spec3_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/AFC_2_spec4_alphaKulczynski2.jpg" width="20%"/>
 </center>
 
 <center class="half">
-<img src="figs/RQ1_ku2/WT_1_spec5_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/WT_2_spec5_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/SC_1_spec6_alphaKulczynski2.jpg" width="20%"/>
-<img src="figs/RQ1_ku2/SC_2_spec6_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/WT_1_spec5_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/WT_2_spec5_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/SC_1_spec6_alphaKulczynski2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_ku2/SC_2_spec6_alphaKulczynski2.jpg" width="20%"/>
 </center>
 
+
+Due to the excessive amount of content associated with presenting the results for RQ1 under all suspiciousness metrics, only the results for Kulczynski2 are supplemented here. The analysis results for the remaining metrics can be found in the directory `figs\RQ1`. Here, additional analyses are provided for the top 20% conditions, showcasing results for each distinct benchmark under all metrics. The table results for this analysis can be obtained by executing the provided file `figs/valRate.m`.
+<div align=center><img width="60%" height="60%" src="figs/RQ1/RQ1_allmetallsps_20p/conclusionTab.jpg"></div>
 
 ### RQ2
 
 The following is the result table compiled by RQ2 under Kulczynski2's metric.<br>
 It can be seen from these results that the difference between D* and Ku2 is not very big, and both can help users accurately locate errors and obtain better results.
 
-<div align=center><img width="80%" height="80%" src="figs/RQ2ku2_table.png"></div>
+<div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2ku2_table.png"></div>

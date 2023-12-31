@@ -5,7 +5,6 @@ bdclose('all');
 cd /[pathtoTACTICAL]
 addpath(genpath('/[pathtoTACTICAL]'));
 
-
 path = '';  % enter the path of dataset
 nnStru = [10 10 10 10];     % endter the neural network hidden layer structure 
 path = fullfile(path, 'transDataProcessed');

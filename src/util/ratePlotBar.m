@@ -3,13 +3,12 @@ close all;
 clc;
 bdclose('all');
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 cd /[pathtoTACTICAL]
 addpath(genpath('/[pathtoTACTICAL]'));
 
 % the path of mutation info data
-path = 'result/30-Oct-2023-AFC_FFNN_trainlm_15_15_15_Apr_1_2020_M_spec_2_valFL_layer_1-3';
+path = '';  % enter the path of dataset
 figname = 'AFC_3_15_spec2';     % the name of generated figure
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
