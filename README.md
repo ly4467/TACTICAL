@@ -161,9 +161,33 @@ According to the description in RQ3 of the paper, "We also observe that Kulczyns
 Due to the excessive amount of content associated with presenting the results for RQ1 under all suspiciousness metrics, only the results for Kulczynski2 are supplemented here. The analysis results for the remaining metrics can be found in the directory `figs\RQ1`. Here, additional analyses are provided for the top 20% conditions, showcasing results for each distinct benchmark under all metrics. The table results for this analysis can be obtained by executing the provided file `figs/valRate.m`.
 <div align=center><img width="60%" height="60%" src="figs/RQ1/RQ1_allmetallsps_20p/conclusionTab.jpg"></div>
 
-### RQ2
+### RQ2: How does the selection of hyperparameters of the neuron activation criteria affect the effectiveness of Tactical?
 
-The following is the result table compiled by RQ2 under Kulczynski2's metric.<br>
-It can be seen from these results that the difference between D* and Ku2 is not very big, and both can help users accurately locate errors and obtain better results.
+This research question (RQ) meticulously elucidates the impact of parameter selection on experimental outcomes and provides users with comprehensive guidance for parameter selection. Similar to RQ1, the experimental results for all metrics employed in the paper, excluding D*, are supplemented here.<br>
+It was demonstrated in RQ3 that the best metrics are D* and Ku2, through the comparison between the best metrics D* and Ku2, we can find the difference between them is not very big, and both can help users accurately locate errors and obtain better results. The assertion put forth in the paper, stating that 'there is no single value that is consistently better than the others for all the benchmarks,' is validated across all metrics here. Each benchmark necessitates the establishment of either strict or lenient parameters based on the specific application context to achieve optimal recognition outcomes. However, the distinctions in the optimal parameter settings for different metrics are marginal. In other words, the impact of the stringency of parameter selection for a specific benchmark is minimal with respect to different metrics, and is predominantly determined by the nature of the AI controller and the application scenario. If you intend to utilize other metrics for fault localization, it is recommended to consider the parameter selection insights provided in the paper, specifically the result analysis conducted for the D* metric. The findings for D* can serve as a valuable reference for parameter selection when applying alternative metrics in fault localization.
 
+#### Tarantula
+<div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2Tarantula_table.png"></div>
+
+#### Ochiai
+<div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2Ochiai_table.png"></div>
+
+#### Dstar
+<div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2Dstar_table.png"></div>
+
+#### Jaccard
+<div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2Jaccard_table.png"></div>
+
+#### Kulczynski1
+<div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2ku1_table.png"></div>
+
+#### Kulczynski2
 <div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2ku2_table.png"></div>
+
+
+### RQ3: How does the selection of suspiciousness metric affect the effectiveness of Tactical?
+
+The paper presents a comparative analysis among different metrics, and here, an alternative perspective is provided. Across 12 distinct benchmarks, the occurrences of optimal performance for each criterion under a specific metric are observed. For instance, in the table below, the first row and the eighth column indicate that Tarantula under the metric MD achieved better performance in 5 benchmarks compared to other metrics. The table is presented below, and both this table and the one provided in Research Question 3 (RQ3) in the paper reveal that the metrics D* and Ku2 exhibit superior performance.
+
+<div align=center><img width="40%" height="40%" src="figs/RQ3/diffmetcompare.png"></div>
+

@@ -1,0 +1,33 @@
+\begin{table*}[!tb]
+\normalfont
+\caption{RQ2 -- Comparison of different versions of \ourtool with different hyperparameters using \areaUnderCurve ($\topsNum \le 20\%$)}
+\label{table:rq2}
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.6}
+\resizebox{\linewidth}{!}{
+\begin{tabular}{c|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc}
+\toprule
+& \multicolumn{3}{c|}{\INA} & \multicolumn{3}{c|}{\ITK} & \multicolumn{6}{c|}{\PNA} & \multicolumn{6}{c|}{\PTK} & \multicolumn{6}{c|}{\PD} & \multicolumn{6}{c|}{\ND} & \multicolumn{3}{c|}{\MI} & \multicolumn{3}{c}{\MD} \\
+\cline{2-37} 
+& \multicolumn{3}{c|}{\threshold} & \multicolumn{3}{c|}{\paramK} & \multicolumn{3}{c|}{\threshold} & \multicolumn{3}{c|}{\duration} & \multicolumn{3}{c|}{\duration} & \multicolumn{3}{c|}{\paramK} & \multicolumn{3}{c|}{\threshold} & \multicolumn{3}{c|}{\duration} & \multicolumn{3}{c|}{\threshold} & \multicolumn{3}{c|}{\duration} & \multicolumn{3}{c|}{\duration} & \multicolumn{3}{c}{\duration} \\
+%\cline{2-5} \cline{6-8} \cline{9-11} \cline{12-14} \cline{16-19} \cline{20-23} \cline{24-27} \cline{28-33} \cline{34-36}
+\cline{2-37}
+& \smallHyp & \mediumHyp & \largeHyp & \smallHyp & \mediumHyp & \largeHyp & \smallHyp & \mediumHyp & \largeHyp & \smallHyp & \mediumHyp & \largeHyp & \smallHyp & \mediumHyp & \largeHyp & \smallHyp & \mediumHyp & \largeHyp & \smallHyp & \mediumHyp & \largeHyp & \smallHyp & \mediumHyp & \largeHyp & \smallHyp & \mediumHyp & \largeHyp & \smallHyp & \mediumHyp & \largeHyp & \smallHyp & \mediumHyp & \largeHyp & \smallHyp & \mediumHyp & \largeHyp\\
+%& $h_s$ & $h_m$ & $h_l$ & $k_s$ & $k_m$ & $k_l$ & $h_s$ & $h_m$ & $h_l$ & $\duration_s$ & $\duration_m$ & $\duration_l$ & $h_s$ & $h_m$ & $h_l$ & $k_s$ & $k_m$ & $k_l$ & $h_s$ & $h_m$ & $h_l$ & $\duration_s$ & $\duration_m$ & $\duration_l$ & $h_s$ & $h_m$ & $h_l$ & $\duration_s$ & $\duration_m$ & $\duration_l$ & $\duration_s$ & $\duration_m$ & $\duration_l$ & $\duration_s$ & $\duration_m$ & $\duration_l$ \\
+\midrule
+ACC\#1$-{\specification_1}$ & 0.093 & \cg 0.095 & 0.074 & 0.060 & \cg 0.104 & 0.098 & \cg 0.097 & 0.081 & 0.064 & \cg 0.082 & 0.080 & 0.081 & \cg 0.063 & 0.060 & 0.058 & 0.029 & 0.046 & \cg 0.107 & \cg 0.105 & 0.049 & 0.033 & 0.055 & 0.064 & \cg 0.068 & \cg 0.075 & 0.044 & 0.031 & 0.045 & 0.052 & \cg 0.053 & \cg 0.104 & 0.098 & 0.083 & \cg 0.077 & 0.073 & 0.076 \\
+ACC\#1$-{\specification_2}$ & 0.053 & 0.090 & \cg 0.102 & \cg 0.094 & 0.074 & 0.052 & 0.044 & 0.090 & \cg 0.100 & \cg 0.080 & 0.079 & 0.075 & \cg 0.082 & \cg 0.082 & 0.080 & 0.053 & 0.081 & \cg 0.110 & \cg 0.049 & 0.047 & 0.035 & 0.039 & 0.046 & \cg 0.047 & 0.039 & \cg 0.051 & 0.033 & 0.032 & 0.044 & \cg 0.047 & 0.047 & 0.047 & \cg 0.052 & 0.041 & \cg 0.045 & 0.039 \\
+ACC\#2$-{\specification_1}$ & \cg 0.105 & 0.096 & 0.083 & 0.051 & \cg 0.107 & 0.095 & \cg 0.117 & 0.093 & 0.075 & 0.081 & \cg 0.096 & 0.091 & \cg 0.061 & 0.057 & 0.054 & 0.028 & 0.053 & \cg 0.091 & \cg 0.129 & 0.058 & 0.035 & 0.063 & 0.075 & \cg 0.084 & \cg 0.062 & 0.044 & 0.031 & 0.039 & 0.046 & \cg 0.051 & \cg 0.128 & 0.125 & 0.121 & \cg 0.066 & \cg 0.066 & 0.058 \\
+ACC\#2$-{\specification_2}$ & 0.107 & \cg 0.112 & 0.100 & 0.084 & \cg 0.108 & 0.101 & \cg 0.111 & 0.102 & 0.097 & 0.000 & \cg 0.104 & 0.102 & 0.071 & \cg 0.072 & 0.071 & 0.049 & \cg 0.088 & 0.077 & \cg 0.094 & 0.057 & 0.028 & 0.048 & 0.059 & \cg 0.072 & \cg 0.084 & 0.049 & 0.031 & 0.047 & 0.056 & \cg 0.060 & \cg 0.094 & \cg 0.094 & 0.092 & \cg 0.090 & 0.084 & 0.075 \\
+AFC\#1$-{\specification_3}$ & \cg 0.137 & 0.135 & 0.111 & 0.073 & 0.078 & \cg 0.090 & \cg 0.096 & 0.079 & 0.069 & 0.000 & \cg 0.073 & 0.062 & \cg 0.057 & 0.041 & 0.037 & 0.037 & 0.048 & \cg 0.049 & \cg 0.137 & 0.117 & 0.095 & 0.113 & 0.117 & \cg 0.120 & \cg 0.060 & 0.041 & 0.048 & \cg 0.054 & 0.047 & 0.047 & \cg 0.079 & 0.045 & 0.045 & \cg 0.025 & 0.021 & 0.022 \\
+AFC\#1$-{\specification_4}$ & \cg 0.122 & 0.107 & 0.105 & 0.080 & 0.088 & \cg 0.099 & \cg 0.132 & 0.094 & 0.078 & 0.000 & \cg 0.101 & 0.096 & \cg 0.074 & 0.063 & 0.057 & 0.054 & 0.069 & \cg 0.071 & \cg 0.128 & 0.097 & 0.083 & 0.100 & 0.103 & \cg 0.104 & \cg 0.110 & 0.056 & 0.073 & 0.079 & 0.079 & \cg 0.080 & \cg 0.095 & 0.064 & 0.059 & \cg 0.047 & 0.030 & 0.032 \\
+AFC\#2$-{\specification_3}$ & 0.133 & \cg 0.137 & 0.135 & 0.112 & 0.118 & \cg 0.131 & \cg 0.100 & 0.075 & 0.052 & 0.000 & \cg 0.067 & 0.060 & \cg 0.048 & 0.026 & 0.024 & 0.023 & 0.031 & \cg 0.043 & \cg 0.139 & 0.115 & 0.083 & 0.109 & 0.113 & \cg 0.115 & \cg 0.108 & 0.050 & 0.054 & \cg 0.075 & 0.069 & 0.067 & \cg 0.090 & 0.050 & 0.041 & \cg 0.036 & 0.028 & 0.033 \\
+AFC\#2$-{\specification_4}$ & \cg 0.108 & 0.099 & 0.095 & 0.096 & 0.103 & \cg 0.108 & \cg 0.109 & 0.074 & 0.064 & 0.000 & \cg 0.081 & 0.076 & \cg 0.076 & 0.061 & 0.055 & 0.055 & 0.066 & \cg 0.071 & \cg 0.105 & 0.083 & 0.081 & 0.089 & \cg 0.090 & \cg 0.090 & \cg 0.122 & 0.073 & 0.069 & 0.087 & 0.087 & \cg 0.091 & \cg 0.070 & 0.049 & 0.046 & \cg 0.047 & 0.030 & 0.036 \\
+WT\#1$-{\specification_5}$ & 0.060 & 0.065 & \cg 0.081 & \cg 0.075 & 0.070 & 0.059 & 0.055 & 0.070 & \cg 0.078 & 0.000 & \cg 0.081 & 0.079 & 0.089 & \cg 0.092 & 0.090 & \cg 0.096 & 0.091 & 0.085 & 0.062 & 0.062 & \cg 0.074 & 0.072 & \cg 0.073 & \cg 0.073 & \cg 0.067 & 0.060 & 0.063 & \cg 0.067 & 0.064 & 0.059 & 0.070 & \cg 0.072 & 0.066 & 0.057 & 0.056 & \cg 0.058 \\
+WT\#2$-{\specification_5}$ & 0.041 & \cg 0.060 & \cg 0.060 & \cg 0.045 & 0.034 & 0.033 & 0.040 & \cg 0.056 & 0.050 & 0.000 & \cg 0.049 & 0.048 & 0.076 & \cg 0.089 & 0.086 & \cg 0.086 & 0.084 & 0.081 & 0.039 & \cg 0.059 & 0.054 & 0.049 & \cg 0.052 & 0.051 & 0.033 & 0.048 & \cg 0.050 & \cg 0.046 & 0.042 & 0.043 & 0.037 & 0.037 & \cg 0.040 & 0.038 & 0.036 & \cg 0.039 \\
+SC\#1$-{\specification_6}$ & 0.061 & \cg 0.082 & 0.075 & \cg 0.061 & 0.059 & 0.050 & 0.075 & \cg 0.079 & 0.073 & 0.055 & \cg 0.082 & 0.071 & 0.077 & \cg 0.082 & 0.080 & \cg 0.092 & 0.080 & 0.067 & 0.062 & \cg 0.083 & 0.077 & \cg 0.074 & \cg 0.074 & 0.073 & 0.057 & 0.074 & \cg 0.080 & 0.071 & \cg 0.072 & 0.069 & 0.072 & 
+\cg 0.096 & 0.069 & 0.078 & \cg 0.091 & 0.075 \\
+SC\#2$-{\specification_6}$ & 0.062 & \cg 0.101 & 0.092 & \cg 0.085 & 0.082 & 0.072 & 0.075 & \cg 0.088 & 0.082 & 0.064 & \cg 0.078 & 0.077 & 0.033 & 0.036 & \cg 0.037 & 0.020 & \cg 0.049 & 0.036 & 0.062 & \cg 0.108 & 0.093 & 0.087 & \cg 0.089 & 0.088 & 0.062 & \cg 0.097 & 0.091 & \cg 0.084 & 0.083 & 0.083 & \cg 0.124 & 0.102 & 0.098 & 0.102 & \cg 0.104 & 0.101 \\ \midrule
+\# best & 4 & \cg 6 & 3 & \cg 5 & 3 & 4 & \cg 7 & 3 & 2 & 2 & \cg 10 & 0 & \cg 7 & 5 & 1 & 3 & 2 & \cg 7 & \cg 8 & 3 & 1 & 1 & 5 & \cg 9 & \cg 8 & 2 & 2 & 5 & 1 & \cg 6 & \cg 8 & 3 & 2 & \cg 7 & 4 & 2 \\ \bottomrule
+\end{tabular}}
+\end{table*}
