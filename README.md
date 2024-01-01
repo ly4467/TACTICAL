@@ -213,6 +213,11 @@ This research question (RQ) meticulously elucidates the impact of parameter sele
 #### Kulczynski2
 <div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2ku2_table.png"></div>
 
+Here, we supplement the parameter statistics under the D* metric based on the results of all benchmark experiments, omitting the majority of data in the RQ2 table for user readability. Users are encouraged to initially refer to this table for parameter selection during usage. Subsequently, for a more comprehensive understanding tailored to users' specific needs and diverse benchmarks, detailed data tables above can be consulted for additional information.</br> 
+In the table, the first entry in the row corresponding to the INA parameter is 4/12, indicating that using a small threshold for fault localization across 12 benchmarks results in optimal performance in 4 of them.
+
+<div align=center><img width="40%" height="40%" src="figs/RQ2/supplementTable.png"></div>
+
 
 ### RQ3: How does the selection of suspiciousness metric affect the effectiveness of Tactical?
 
