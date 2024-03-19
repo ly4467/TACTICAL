@@ -1,4 +1,4 @@
-function parallelAnalyzeDiffParam_multi(bmCell, bmInfo, maxPercent, dataFolder, transData_mode, randTimes)
+function parallelAnalyzeDiffParam_multi(bmCell, bmInfo, maxPercent, dataFolder, transData_mode, randTimes, mutNum)
     
     % manual configs
     if ~isempty(bmInfo)
@@ -8,7 +8,7 @@ function parallelAnalyzeDiffParam_multi(bmCell, bmInfo, maxPercent, dataFolder, 
         nnStru = bmInfo{4}{1};
         bm = bmName(1:strfind(bmName, '#')-1);
         spec = str2num(bmName(strfind(bmName, '}^{')+3));
-        bmFolderName = sprintf('%s_%d_%d_spec%d_multi', bm, numel(nnStru), nnStru(1), spec);
+        bmFolderName = sprintf('%s_%d_%d_spec%d_mut%d', bm, numel(nnStru), nnStru(1), spec, mutNum);
         bmPath = fullfile(dataFolder, bmFolderName);
 
         % data preprocess 
@@ -44,7 +44,7 @@ function parallelAnalyzeDiffParam_multi(bmCell, bmInfo, maxPercent, dataFolder, 
             nnStru = bmInfo{2};
             bm = bmName(1:strfind(bmName, '#')-1);
             spec = str2num(bmName(strfind(bmName, '}^{')+3));
-            bmFolderName = sprintf('%s_%d_%d_spec%d_multi', bm, numel(nnStru), nnStru(1), spec);
+            bmFolderName = sprintf('%s_%d_%d_spec%d_mut%d', bm, numel(nnStru), nnStru(1), spec, mutNum);
             bmPath = fullfile(dataFolder, bmFolderName);
             
             % data preprocess 

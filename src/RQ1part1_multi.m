@@ -7,6 +7,7 @@ bdclose('all');
 cd /Users/ly/Desktop/TACTICAL
 addpath(genpath('/Users/ly/Desktop/TACTICAL'));
 automode = 1;   % 1 auto/ 0 manual
+mutNum = 2;
 
 % when automode=0, set parameters manually  
 bmName = 'WT#1 S_{WT}^{5}';
@@ -66,5 +67,5 @@ else
     error('automode error!')
 end
 dataFolder = 'result';
-parallelAnalyzeDiffParam_multi(bmCell, bmInfo, maxPercent, dataFolder, transData_mode, randTimes)
+parallelAnalyzeDiffParam_multi(bmCell, bmInfo, maxPercent, dataFolder, transData_mode, randTimes, mutNum)
     

@@ -94,40 +94,40 @@ function transData(folder_path, transData_mode)
             parsaveMutInfo(newfile, new_sig_state, reg.sig_state, reg.weightMut, mutate, realsuccessRate);
         end
     
-        %% Transfer no mutation file into covfl file
-        fileList = dir(fullfile(folder_path, '*.mat'));
-        for f = 1:numel(fileList)
-            if isempty(strfind(fileList(f).name, '_M_'))
-                fileOriName = fileList(f).name;
-                fileOriPath = fullfile(fileList(f).folder, fileList(f).name);
-            end
-        end
-        warning('off', 'all');
-        oriData = load(fileOriPath);
-        warning('on', 'all');
-        sig_state = cell(1,numel(oriData.ori_diagInfo_suite));
-        for sig = 1: numel(oriData.ori_diagInfo_suite)
-            sig_state{sig}.Br = oriData.ori_diagInfo_suite{sig}.Br;
-            sig_state{sig}.rob = oriData.ori_diagInfo_suite{sig}.rob;
-            sig_state{sig}.state = oriData.ori_diagInfo_suite{sig}.state;
-            sig_state{sig}.tau_s = oriData.ori_diagInfo_suite{sig}.tau_s;
-            sig_state{sig}.ic_sig_val = oriData.ori_diagInfo_suite{sig}.ic_sig_val;
-            sig_state{sig}.oc_sig_val = oriData.ori_diagInfo_suite{sig}.oc_sig_val;
-
-
-            nn_hidden_out = {};
-            nn_output = [];
-            for t = 1:numel(oriData.ori_diagInfo_suite{sig}.neuronOut)
-                nnOut = oriData.ori_diagInfo_suite{sig}.neuronOut{t};
-                nn_hidden_out = cat(1, nn_hidden_out, nnOut(1:end-1));
-                nn_output = cat(1, nn_output, nnOut{end});
-            end
-            sig_state{sig}.nn_hidden_out = nn_hidden_out;
-            sig_state{sig}.nn_output = nn_output;
-        end
-        newOriFileName = fileOriName(1:strfind(fileOriName, '_spec')-1);
-        filename = fullfile(fullfile(folder_path, 'transDataProcessed'), [newOriFileName, '_nomutation.mat']);
-        save(filename, "sig_state");
+        % %% Transfer no mutation file into covfl file
+        % fileList = dir(fullfile(folder_path, '*.mat'));
+        % for f = 1:numel(fileList)
+        %     if isempty(strfind(fileList(f).name, '_M_'))
+        %         fileOriName = fileList(f).name;
+        %         fileOriPath = fullfile(fileList(f).folder, fileList(f).name);
+        %     end
+        % end
+        % warning('off', 'all');
+        % oriData = load(fileOriPath);
+        % warning('on', 'all');
+        % sig_state = cell(1,numel(oriData.ori_diagInfo_suite));
+        % for sig = 1: numel(oriData.ori_diagInfo_suite)
+        %     sig_state{sig}.Br = oriData.ori_diagInfo_suite{sig}.Br;
+        %     sig_state{sig}.rob = oriData.ori_diagInfo_suite{sig}.rob;
+        %     sig_state{sig}.state = oriData.ori_diagInfo_suite{sig}.state;
+        %     sig_state{sig}.tau_s = oriData.ori_diagInfo_suite{sig}.tau_s;
+        %     sig_state{sig}.ic_sig_val = oriData.ori_diagInfo_suite{sig}.ic_sig_val;
+        %     sig_state{sig}.oc_sig_val = oriData.ori_diagInfo_suite{sig}.oc_sig_val;
+        % 
+        % 
+        %     nn_hidden_out = {};
+        %     nn_output = [];
+        %     for t = 1:numel(oriData.ori_diagInfo_suite{sig}.neuronOut)
+        %         nnOut = oriData.ori_diagInfo_suite{sig}.neuronOut{t};
+        %         nn_hidden_out = cat(1, nn_hidden_out, nnOut(1:end-1));
+        %         nn_output = cat(1, nn_output, nnOut{end});
+        %     end
+        %     sig_state{sig}.nn_hidden_out = nn_hidden_out;
+        %     sig_state{sig}.nn_output = nn_output;
+        % end
+        % newOriFileName = fileOriName(1:strfind(fileOriName, '_spec')-1);
+        % filename = fullfile(fullfile(folder_path, 'transDataProcessed'), [newOriFileName, '_nomutation.mat']);
+        % save(filename, "sig_state");
     
     elseif transData_mode == 2
         fileList = dir(fullfile(folder_path, '*_M_*.mat'));
