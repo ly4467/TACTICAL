@@ -264,15 +264,12 @@ for phi_i in range(len(phi_str)):
 			bm.write('sig_str = ' + sig_st + ';\n\n')
 
 			bm.write('covModel = CovFL(bm, mdl, D, D_run, is_nor, net, T, Ts, sysconf, phi_str, sig_str, spec_i, [], [], [], T_suit_num, [], [], behavior_change_rate, [], [], [], nsel_mode_val, valLayer);\n')
-			bm.write("mutationWeightList = covModel.constructVar('mutationWeightList');\n\n")
+			# bm.write("mutationWeightList = covModel.constructVar('mutationWeightList');\n")
+			# bm.write("bugWeightArr = covModel.constructVar('genMut');\n\n")
 
-			bm.write('if numel(valLayer) == 1\n')
-			bm.write("    resultPath = sprintf('result/%s_%d_%d_spec%d', bm, numel(covModel.networkStru), covModel.networkStru(1), spec_i);\n")
-			bm.write('else\n')
-			bm.write("    resultPath = sprintf('result/%s_%d_%d_spec%d_%d-%d/', bm, numel(covModel.networkStru), covModel.networkStru(1), spec_i, covModel.valLayer(1), covModel.valLayer(end));\n")
-			bm.write('end\n')
-			bm.write('mkdir(resultPath);\n')
-			bm.write('bugset = bugGenerator(bugset_budget);\n\n')
+			bm.write("resultPath = sprintf('result/%s_%d_%d_spec%d', bm, covModel.layerNum, covModel.networkStru(1), spec_i);\n")
+			bm.write('mkdir(resultPath);\n\n')
+
 
 			bm.write('sig_state = cell(1,T_suit_num);\n')
 			bm.write('for sig = 1:T_suit_num\n')
@@ -291,10 +288,10 @@ for phi_i in range(len(phi_str)):
 			bm.write('end\n')
 			bm.write('pool = parpool([2 10]);\n\n')
 
-			bm.write('parfor idx = 1:size(mutationWeightList,1)\n')
+			bm.write('parfor idx = 1:size(covModel.mutationWeightList,1)\n')
 			bm.write("    warning('off', 'all');\n")
 			# bm.write('    covModel = CovFL(bm, mdl, D, D_run, is_nor, net, T, Ts, sysconf, phi_str, sig_str, spec_i, [], [], [], T_suit_num, [], [], behavior_change_rate, [], [], [], nsel_mode_val, valLayer);\n')
-			bm.write('    covModel.mutationParallelProcess(idx, mutationWeightList, bugset, resultPath);\n')
+			bm.write('    covModel.mutationParallelProcess(idx, resultPath);\n')
 			bm.write('end\n\n')
 
 			bm.write('quit force\n')

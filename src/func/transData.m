@@ -15,7 +15,8 @@ function transData(folder_path, transData_mode)
         % parfor i = 1:numel(fileList)
         for i = 1:numel(fileList)
             warning('off', 'all');
-            reg = load(fileList(i).name);
+            reg = load(fullfile(fileList(i).folder, fileList(i).name));
+            weightMut = reg.cur_bug;
             sig_success_rate = reg.cur_safety_rate/numel(reg.cur_diagInfo_suite);
             sig_state = cell(1,numel(reg.cur_diagInfo_suite));
             for sig = 1: numel(sig_state)
@@ -38,11 +39,15 @@ function transData(folder_path, transData_mode)
             end 
     
             nameReg = fileList(i).name;
+            % original
+            % newfileName = nameReg(1:strfind(nameReg, '_bug') - 1);
+
+            % new, multiple mutants
+            % newfileName = [nameReg(1:strfind(nameReg, '_bug')) nameReg(strfind(nameReg, 'spec'):strfind(nameReg, '_selflag')-1) '.mat'];
             newfileName = nameReg(1:strfind(nameReg, '_selflag') - 1);
-            newfileName = [newfileName, '.mat'];
             newfile = fullfile(newfolderPath, newfileName);
             % Do not delete one sig_state in "sig_state, sig_state"!
-            parsaveFLinfo(newfile, sig_state, sig_state, [], sig_success_rate);
+            parsaveMutInfo(newfile, sig_state, sig_state, weightMut, [], sig_success_rate);
             fprintf("File %s transfered\n", newfileName);
             warning('on', 'all');
         end
@@ -58,7 +63,7 @@ function transData(folder_path, transData_mode)
         oldfolderName = newfolderPath;
         mkdir(newfolderName)
         fileList = dir(fullfile(oldfolderName, '*_M_*.mat'));
-        parfor f = 1:numel(fileList)
+        for f = 1:numel(fileList)
             curFile = fullfile(fileList(f).folder, fileList(f).name);
             [~,name,~] = fileparts(curFile);
             reg = load(curFile);
@@ -74,8 +79,9 @@ function transData(folder_path, transData_mode)
                 end
             end
             realsuccessRate = 1-(sum(robList<0)/numel(new_sig_state));
+            mutate = (realsuccessRate >= 0.1 && realsuccessRate <= 0.9);
     
-            if realsuccessRate < 0.1 || realsuccessRate > 0.9
+            if ~mutate
                 newfileName = [name, '_mutate_0.mat'];
                 newfile = fullfile(oldfolderName, newfileName);
                 movefile(curFile, newfile);
@@ -85,7 +91,7 @@ function transData(folder_path, transData_mode)
                 movefile(curFile, newfile);
             end
             fprintf("File %s preprocess complete!\n", name);
-            parsaveFLinfo(newfile, new_sig_state, reg.sig_state, [], realsuccessRate);
+            parsaveMutInfo(newfile, new_sig_state, reg.sig_state, reg.weightMut, mutate, realsuccessRate);
         end
     
         %% Transfer no mutation file into covfl file
@@ -107,8 +113,8 @@ function transData(folder_path, transData_mode)
             sig_state{sig}.tau_s = oriData.ori_diagInfo_suite{sig}.tau_s;
             sig_state{sig}.ic_sig_val = oriData.ori_diagInfo_suite{sig}.ic_sig_val;
             sig_state{sig}.oc_sig_val = oriData.ori_diagInfo_suite{sig}.oc_sig_val;
-        
-        
+
+
             nn_hidden_out = {};
             nn_output = [];
             for t = 1:numel(oriData.ori_diagInfo_suite{sig}.neuronOut)
@@ -128,15 +134,18 @@ function transData(folder_path, transData_mode)
         newfolderName = fullfile(folder_path, 'transDataProcessed');
         mkdir(newfolderName)
         for f = 1:numel(fileList)
-            [~, ~, ~, ~, ~, mutate] = readFileName(fileList(f).name);
-            if mutate
+            fm = fileList(f).name;
+            if str2num(fm(strfind(fm, 'mutate_')+7))
                 movefile(fullfile(folder_path, fileList(f).name), fullfile(newfolderName, fileList(f).name));
             end
         end
 
         oriFile = dir(fullfile(folder_path, '*_nomutation.mat'));
-        oriFilePath = fullfile(oriFile(1).path, oriFile(1).name);
-        movefile(oriFilePath, fullfile(newfolderName, oriFile(1).name));
+        if ~isempty(oriFile)
+            oriFilePath = fullfile(oriFile(1).folder, oriFile(1).name);
+            movefile(oriFilePath, fullfile(newfolderName, oriFile(1).name));
+        end
+
     end
 end
 

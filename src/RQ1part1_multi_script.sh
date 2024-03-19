@@ -1,3 +1,7 @@
+#!/bin/sh
+csv=$1
+matlab -nodesktop -nosplash <<EOF
+
 clear;
 close all;
 clc;
@@ -6,17 +10,17 @@ bdclose('all');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 cd /Users/ly/Desktop/TACTICAL
 addpath(genpath('/Users/ly/Desktop/TACTICAL'));
-automode = 0;   % 1 auto/ 0 manual
+automode = 1;   % 1 auto/ 0 manual
 
 % when automode=0, set parameters manually  
-bmName = 'SC#2 S_{SC}^{6}';
+bmName = 'WT#1 S_{WT}^{5}';
 % parameter has small/medium/large 3 levels
 actParam = {['m'],['m'],['s' 'm'],['l' 'l'],['s' 's'],['s' 's'],['s'],['l']};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %% main part
-randTimes = 200;
+randTimes = 100;
 maxPercent = 0:0.05:0.1;
 transData_mode = 2;
 
@@ -36,6 +40,7 @@ if automode == 1
     bmName_WT2_spec1 = {'WT#2 S_{WT}^{5}', [15 15 15], [3 4 5], [5 10 15], [5 10 15], [5 10 15]};
     bmName_SC1_spec1 = {'SC#1 S_{SC}^{6}', [10 10 10 10], [2 3 4], [5 10 15], [5 10 15], [5 10 15]};
     bmName_SC2_spec1 = {'SC#2 S_{SC}^{6}', [15 15 15 15], [2 3 4], [5 10 15], [5 10 15], [5 10 15]};    
+      
     bmCell = {bmName_ACC1_spec1, bmName_ACC1_spec2, bmName_ACC2_spec1, bmName_ACC2_spec2, bmName_AFC1_spec1, bmName_AFC1_spec2, bmName_AFC2_spec1, bmName_AFC2_spec2, bmName_WT1_spec1, bmName_WT2_spec1, bmName_SC1_spec1, bmName_SC2_spec1};
     bmInfo = [];
 
@@ -66,5 +71,7 @@ else
     error('automode error!')
 end
 dataFolder = 'result';
-parallelAnalyzeDiffParam(bmCell, bmInfo, maxPercent, dataFolder, transData_mode, randTimes)
+parallelAnalyzeDiffParam_multi(bmCell, bmInfo, maxPercent, dataFolder, transData_mode, randTimes)
     
+quit force
+EOF    

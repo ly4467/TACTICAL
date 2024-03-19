@@ -17,7 +17,8 @@ classdef CovFL < handle
         layerNum       % the number of hidden layers (does not include output layer)
         weight          % weight of hidden layers and output layer stored as a cell array according to the layer index
         bias            % bias of hidden layers and output layer stored as a cell array according to the layer index
-
+        mutationWeightList      % neural network weight index array
+        
         % config of input signal of model
         in_name         % input signal of the model
         in_range        % the range of input signal
@@ -60,6 +61,7 @@ classdef CovFL < handle
     end
 
     methods
+
         function this = CovFL(bm, mdl, D, D_run, is_nor, net, T, Ts, sysconf, phi_str, sig_str, spec_i, cov_metric, act_param, sps_metric, T_suit_num, topk, window, behavior_change_rate, nsel_mode_fl, fl_l, fl_r, nsel_mode_val, valLayer)
             
             this.bm = bm;
@@ -81,8 +83,7 @@ classdef CovFL < handle
 
             this.layerNum = net.numLayers - 1;
             this.weight = cell(1, net.numLayers);
-            this.bias = cell(1, net.numLayers);
-            this.act = cell(1, net.numLayers);      
+            this.bias = cell(1, net.numLayers);      
 
             for li = 1:this.layerNum + 1
                 if li == 1
@@ -132,6 +133,17 @@ classdef CovFL < handle
             this.window = window;
             this.behavior_change_rate = behavior_change_rate;
             this.testsuite = this.constructVar('testsuite');
+
+            this.mutationWeightList = [];
+            for li = this.valLayer
+                partWeightList = [];
+                for i = 1:this.networkStru(li)
+                    partWeightList = [partWeightList; cat(2, (i*ones(1,this.networkStru(li)))', (1:this.networkStru(li))')];
+                end
+                partWeightList = cat(2, ones(size(partWeightList,1),1)*li, partWeightList);
+                this.mutationWeightList = [this.mutationWeightList; partWeightList];
+            end
+            % this.mutationWeightList = cat(2, this.mutationWeightList, zeros(size(this.mutationWeightList,1), 2));
         end
         
         function [rob, tau_s, ic_sig_val, oc_sig_val, nn_hidden_out, output] = signalDiagnosis(this, mdl, in_sig, spec_i)
@@ -318,14 +330,18 @@ classdef CovFL < handle
         
         end
 
-        function [sig_state, sig_stateAll, mutate, bugWeight, sig_success_rate, bug_mdl] = singleWeightMutate(this, bug, bugRealIdx, li, i, j, tsf_size)
+        function [sig_state, sig_stateAll, mutate, sig_success_rate, bug_mdl] = singleWeightMutate(this, weightMut, tsf_size)
 
-            this.weight{li}(i,j) = this.weight{li}(i,j) + bug;
-            bugWeight = this.weight{li}(i,j);
-        
+            % this.weight{li}(i,j) = this.weight{li}(i,j) + bug;
+            % bugWeight = this.weight{li}(i,j);
+            
+            li = weightMut(1, 1);
+            i = weightMut(1, 2);
+            j = weightMut(1, 3);
+
             % buggy model name
-            bug_mdl = sprintf('%s_spec%d_M_%d_%d_%d_bug%d', this.bm, this.spec_i, li, i, j, bugRealIdx);
-            insertWeightBug(this.mdl, bug_mdl, [li i j bug]);
+            bug_mdl = sprintf('%s_M_%d_%d_%d_spec_%d', this.bm, li, i, j, this.spec_i);
+            insertWeightBug(this.mdl, bug_mdl, weightMut);
 
             sig_stateAll = {};
             for sig = 1:tsf_size
@@ -339,14 +355,14 @@ classdef CovFL < handle
                 sig_stateAll{1,sig}.in_sig = this.testsuite{1,sig};
             end
             
-            try
-                this.weight{li}(i,j) = this.net.LW{li,li-1}(i,j);   % return model's nn into orignal parameters
-            catch
-                msg = sprintf('this.weight{li}(i,j) = this.net.LW{li,li-1}(i,j) Error!\n   bugmdl:%s   position: %d_%d_%d,  signal: %d', bug_mdl, li, i, j, sig);
-                error(msg)                
-            end
+            % try
+            %     this.weight{li}(i,j) = this.net.LW{li,li-1}(i,j);   % return model's nn into orignal parameters
+            % catch
+            %     msg = sprintf('this.weight{li}(i,j) = this.net.LW{li,li-1}(i,j) Error!\n   bugmdl:%s   position: %d_%d_%d,  signal: %d', bug_mdl, li, i, j, sig);
+            %     error(msg)                
+            % end
             [mutate, sig_success_rate, sig_state] = this.sigAnalyze(sig_stateAll);
-            fprintf('Mutation finished.  Neuron Layer:%d,    Index:%d,   Weight:%d   Mutator no.%d,  covModel suite size:%d\n', li, i, j, bugRealIdx, tsf_size);
+            fprintf('Mutation finished.  Neuron Layer:%d,   Index:%d,   Weight:%d,  Signal suite size:%d\n', li, i, j, tsf_size);
         end
         
         function [mutate, sig_success_rate, sigstateNew] = sigAnalyze(this, sig_state)
@@ -378,47 +394,62 @@ classdef CovFL < handle
             end
         end
 
-        function mutationParallelProcess(this, idx, mutationWeightList, bugset, resultPath) 
-        
-            li = mutationWeightList(idx,1);
-            i = mutationWeightList(idx,2);
-            j = mutationWeightList(idx,3);
+        function mutationParallelProcess(this, idx, resultPath) 
+            
+            bugWeightArr = this.constructVar('genMut');
+            mutWaitList = this.mutationWeightList(idx, 1:3);
 
-            % bug = 1;
-            % [sig_state, sig_stateAll, mutate, bugWeight, sig_success_rate, bug_mdl] = this.singleWeightMutate(bug, find(bugset==bug), li, i, j, this.T_suit_num);
-            % if mutate
-            %     % do nothing
-            % else
-            %     if sig_success_rate < this.behavior_change_rate(1)
-            %         bugidxStartpos = 1;
-            %         bugNum = find(bugset==1) - 2;
-            %     elseif sig_success_rate > this.behavior_change_rate(2)
-            %         bugidxStartpos = find(bugset==1);
-            %         bugNum = numel(bugset) - bugidxStartpos;
-            %     end
-            % 
-            %     for bugidx = 1:bugNum 
-            %         bugidxReg = bugidx + bugidxStartpos;
-            %         bug = bugset(bugidxReg);
-            % 
-            %         [sig_state, sig_stateAll, mutate, bugWeight, sig_success_rate, bug_mdl] = this.singleWeightMutate(bug, bugidxReg, li, i, j, this.T_suit_num);
-            %         if (sig_success_rate<this.behavior_change_rate(1)) || mutate
-            %             break
-            %         end
-            %     end
-            % end
+            for bugVal = bugWeightArr
+                weightMut = [mutWaitList bugVal];
+                [sig_state, sig_stateAll, mutate, sig_success_rate, bug_mdl] = this.singleWeightMutate(weightMut, this.T_suit_num);
 
-            for bugidx = 1:numel(bugset) 
-                bug = bugset(bugidx);
-                [sig_state, sig_stateAll, mutate, bugWeight, sig_success_rate, bug_mdl] = this.singleWeightMutate(normrnd(bug,1), bugidx, li, i, j, this.T_suit_num);
-                if (sig_success_rate<this.behavior_change_rate(1)) || mutate
+                % if (sig_success_rate<this.behavior_change_rate(1)) || mutate
+                if mutate
                     break
                 end
             end
 
-            FL_file = [resultPath, bug_mdl, '_mutate_', num2str(mutate), '.mat'];
-            save(FL_file, "sig_state", "sig_stateAll", "bug", "bugset", "mutate", "bugWeight", "sig_success_rate");
-            % parsaveMutInfo(FL_file, sig_state, sig_stateAll, bug, bugset, mutate, bugWeight, sig_success_rate);
+            FL_file = fullfile(resultPath, [bug_mdl, '_mutate_', num2str(mutate), '.mat']);
+            save(FL_file, "sig_state", "sig_stateAll", "weightMut", "sig_success_rate", "mutate");
+            fprintf('Mutation File %s complete!', FL_file);
+        end
+
+        function multiWeightMutate(this, resultPath, mutantInfo)
+            noMutInfo = this.mutationWeightList(~ismember(this.mutationWeightList(:,1:2), mutantInfo(:,1:2), "rows"),:);
+            targetWeight = noMutInfo(randi(size(noMutInfo,1)),:);
+            bugWeightArr = this.constructVar('genMut');
+            
+            for bugVal = bugWeightArr
+                mutWaitList = cat(1, mutantInfo, [targetWeight bugVal]);
+                bug_mdl_single = sprintf('%s_M_%d_%d_%d_spec_%d', this.bm, mutWaitList(1,1), mutWaitList(1,2), mutWaitList(1,3), this.spec_i);
+                bug_mdl_double = sprintf('%s_M_%d_%d_%d_%d_%d_%d_spec_%d', this.bm, mutWaitList(1,1), mutWaitList(1,2), mutWaitList(1,3), mutWaitList(2,1), mutWaitList(2,2), mutWaitList(2,3), this.spec_i);
+                insertWeightBug(this.mdl, bug_mdl_single, mutWaitList(1,:));
+                insertWeightBug(bug_mdl_single, bug_mdl_double, mutWaitList(2,:));
+                bug_mdl = bug_mdl_double;
+                if size(mutWaitList,1) == 3
+                    bug_mdl_triple = sprintf('%s_M_%d_%d_%d_%d_%d_%d_%d_%d_%d_spec_%d', this.bm, mutWaitList(1,1), mutWaitList(1,2), mutWaitList(1,3), mutWaitList(2,1), mutWaitList(2,2), mutWaitList(2,3), mutWaitList(3,1), mutWaitList(3,2), mutWaitList(3,3), this.spec_i);
+                    insertWeightBug(bug_mdl_double, bug_mdl_triple, mutWaitList(3,:));
+                    bug_mdl = bug_mdl_triple;
+                end
+
+                sig_stateAll = {};
+                for sig = 1:tsf_size
+                    try
+                        [sig_stateAll{end+1}.rob, sig_stateAll{end+1}.tau_s, sig_stateAll{end+1}.ic_sig_val, sig_stateAll{end+1}.oc_sig_val, sig_stateAll{end+1}.nn_hidden_out, sig_stateAll{end+1}.nn_output] = this.signalDiagnosis(bug_mdl, this.testsuite{1,sig}, this.spec_i);
+                    catch
+                        msg = sprintf('\n multiWeightMutate signalDiagnosis Error!\n   error: %s,  signal: %d', bug_mdl, sig);
+                        error(msg)
+                    end
+                    sig_stateAll{1,sig}.in_sig = this.testsuite{1,sig};
+                end
+
+                if mutate
+                    break
+                end
+            end
+
+            FL_file = fullfile(resultPath, [bug_mdl, '_mutate_', num2str(mutate), '.mat']);
+            save(FL_file, "sig_state", "sig_stateAll", "weightMut", "sig_success_rate", "mutate");
             fprintf('Mutation File %s complete!', FL_file);
         end
 
@@ -432,16 +463,6 @@ classdef CovFL < handle
             %   intialized variable
 
             switch str
-                case 'mutationWeightList'
-                    var = [];
-                    for li = this.valLayer
-                        partWeightList = [];
-                        for i = 1:this.networkStru(li)
-                            partWeightList = [partWeightList; cat(2, (i*ones(1,this.networkStru(li)))', (1:this.networkStru(li))')];
-                        end
-                        partWeightList = cat(2, ones(size(partWeightList,1),1)*li, partWeightList);
-                        var = [var; partWeightList];
-                    end
                 case 'testsuite'
                     var = {};
                     for i = 1: numel(this.D.tr_in_cell)
@@ -449,10 +470,21 @@ classdef CovFL < handle
                             var{end+1} = this.D.tr_in_cell{1,i};
                         end
                     end
+
+                case 'genMut'
+                    regMaxMin = zeros(this.layerNum, 2);
+                    for i = 1:this.layerNum
+                        regMaxMin(i, 1) = max(this.weight{i}, [], 'all');
+                        regMaxMin(i, 2) = min(this.weight{i}, [], 'all');
+                    end
+                    mutRange = [min(regMaxMin, [], 'all') - 0.5 * min(regMaxMin, [], 'all'), max(regMaxMin, [], 'all') + 0.5 * max(regMaxMin, [], 'all')];
+                    var = mutRange(1) + rand(1,3) * abs(mutRange(2) - mutRange(1)); 
+
                 otherwise
                     error('Check cell name!');
             end
         end
+
     end
 end
 

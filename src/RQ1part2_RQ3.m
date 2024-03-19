@@ -4,8 +4,10 @@ clc;
 bdclose('all');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-cd /[pathtoTACTICAL] 
-addpath(genpath('/[pathtoTACTICAL]'));
+% cd /[pathtoTACTICAL]
+% addpath(genpath('/[pathtoTACTICAL]'));
+cd /Users/ly/Desktop/TACTICAL
+addpath(genpath('/Users/ly/Desktop/TACTICAL'));
 path = 'result/bestResults';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -34,5 +36,5 @@ for f = 1:numel(bmCell)
     
     bmNameCell{end+1} = fullfile(path, bmMatName);
 end
-[RQ1_2_tab, RQ3_tab] = processBestData(bmNameCell);
+[RQ3_tab, RQ1_2_tab] = processBestData(bmNameCell);
 

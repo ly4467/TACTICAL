@@ -1,4 +1,4 @@
-function parallelAnalyzeDiffParam(bmCell, bmInfo, maxPercent, dataFolder, transData_mode, randTimes)
+function parallelAnalyzeDiffParam_multi(bmCell, bmInfo, maxPercent, dataFolder, transData_mode, randTimes)
     
     % manual configs
     if ~isempty(bmInfo)
@@ -8,7 +8,7 @@ function parallelAnalyzeDiffParam(bmCell, bmInfo, maxPercent, dataFolder, transD
         nnStru = bmInfo{4}{1};
         bm = bmName(1:strfind(bmName, '#')-1);
         spec = str2num(bmName(strfind(bmName, '}^{')+3));
-        bmFolderName = sprintf('%s_%d_%d_spec%d', bm, numel(nnStru), nnStru(1), spec);
+        bmFolderName = sprintf('%s_%d_%d_spec%d_multi', bm, numel(nnStru), nnStru(1), spec);
         bmPath = fullfile(dataFolder, bmFolderName);
 
         % data preprocess 
@@ -26,10 +26,10 @@ function parallelAnalyzeDiffParam(bmCell, bmInfo, maxPercent, dataFolder, transD
         actParam{4} = [bmInfo{4}{3}(find('sml'==bmInfo{2}{4}(1))) bmInfo{4}{2}(find('sml'==bmInfo{2}{4}(2)))];    % ttk_time ttk_num
         actParam{end+1} = [bmInfo{2}{1} bmInfo{2}{3}(2) bmInfo{2}{5}(2) bmInfo{2}{6}(2)];
         
-        thresholdArr = autoSelect(bmPath, maxPercent);
+        thresholdArr = autoSelect_multi(bmPath, maxPercent);
         % thresholdArr = [];
         % analyzing
-        diffTopkAnalyze(bmPath, {bmInfo{3}}, {actParam}, randTimes, nnStru, bmName, thresholdArr, 0);
+        diffTopkAnalyze_multi(bmPath, {bmInfo{3}}, {actParam}, randTimes, nnStru, bmName, thresholdArr, 0);
     else
         for bmIdx = 1:numel(bmCell)
 
@@ -44,7 +44,7 @@ function parallelAnalyzeDiffParam(bmCell, bmInfo, maxPercent, dataFolder, transD
             nnStru = bmInfo{2};
             bm = bmName(1:strfind(bmName, '#')-1);
             spec = str2num(bmName(strfind(bmName, '}^{')+3));
-            bmFolderName = sprintf('%s_%d_%d_spec%d', bm, numel(nnStru), nnStru(1), spec);
+            bmFolderName = sprintf('%s_%d_%d_spec%d_multi', bm, numel(nnStru), nnStru(1), spec);
             bmPath = fullfile(dataFolder, bmFolderName);
             
             % data preprocess 
@@ -55,7 +55,8 @@ function parallelAnalyzeDiffParam(bmCell, bmInfo, maxPercent, dataFolder, transD
             actParam = {};
             fileconfig = {};
             % original codes
-            thresholdArr = autoSelect(bmPath, maxPercent);
+            thresholdArr = autoSelect_multi(bmPath, maxPercent);
+            % thresholdArr = [];
             for thIdx = 1:numel(maxPercent)
                 % if numel(bmInfo{3}) == 3
                 %     for j = 1:3
@@ -82,7 +83,7 @@ function parallelAnalyzeDiffParam(bmCell, bmInfo, maxPercent, dataFolder, transD
             end
             
             % analyzing
-            diffTopkAnalyze(bmPath, fileconfig, actParam, randTimes, nnStru, bmName, thresholdArr, 1);
+            diffTopkAnalyze_multi(bmPath, fileconfig, actParam, randTimes, nnStru, bmName, thresholdArr, 1);
         end
     end
    

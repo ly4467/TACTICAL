@@ -59,6 +59,10 @@ function insertWeightBug(mdl, bug_mdl, weight_bug)
         weight_str = [bug_mdl, '/Air Fuel Control Model 1/Feed-Forward Neural Network/Layer ', ...
             num2str(layer_idx), '/LW{', num2str(layer_idx), ',', num2str(layer_idx-1), '}/IW{', num2str(layer_idx), ',', num2str(layer_idx-1), ...
             '}(', num2str(right_idx), ',:)'''];
+    elseif contains(bug_mdl, 'SC')
+        weight_str = [bug_mdl, '/Subsystem/Feed-Forward Neural Network/Layer ', ...
+            num2str(layer_idx), '/LW{', num2str(layer_idx), ',', num2str(layer_idx-1), '}/IW{', num2str(layer_idx), ',', num2str(layer_idx-1), ...
+            '}(', num2str(right_idx), ',:)'''];
     else
         error('The target blocks can not be found!');
     end    
@@ -78,8 +82,11 @@ function insertWeightBug(mdl, bug_mdl, weight_bug)
     % we can specify the number of significant digits of vpa funciton. Since the target weight is
     % in a state of flux, there is no need to pursue a absolutely precious value.
     target_weight = vpa(target_weight_str, 100);
-    % insert the weight bug
-    target_weight = target_weight + bug_value;
+
+    %% insert the weight bug
+    % original by lyu:target_weight = target_weight + bug_value;
+    target_weight = bug_value;  % modified
+
     % sym to str
     target_weight_str = char(target_weight);
     % replace sps_weight_str to target_weight_str

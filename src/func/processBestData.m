@@ -1,16 +1,17 @@
 function [RQ1_2_tab, RQ3_tab] = processBestData(filePathCell)
     
+    bm_best_auc = cell(1,numel(filePathCell));
     for fileIdx = 1:numel(filePathCell)
         reg = load(filePathCell{fileIdx});
-        bm_best_auc = reg.areaArr(:,1:8,1);
+        bm_best_auc{fileIdx} = reg.areaArr(:,1:end-1,1);
     end
     
-    talantura_auc = zeros(12,8);
-    ochiai_auc = zeros(12,8);
-    dstar_auc = zeros(12,8);
-    jaccard_auc = zeros(12,8);
-    ku1_auc = zeros(12,8);
-    ku2_auc = zeros(12,8);
+    talantura_auc = zeros(numel(filePathCell),8);
+    ochiai_auc = zeros(numel(filePathCell),8);
+    dstar_auc = zeros(numel(filePathCell),8);
+    jaccard_auc = zeros(numel(filePathCell),8);
+    ku1_auc = zeros(numel(filePathCell),8);
+    ku2_auc = zeros(numel(filePathCell),8);
     
     for bmi = 1:12
         for aci = 1:8

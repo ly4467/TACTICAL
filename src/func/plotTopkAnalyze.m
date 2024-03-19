@@ -4,7 +4,7 @@ function areaArr = plotTopkAnalyze(savepath, plotmode, topkData, spsMetric, covM
         topkRateCell = {};
         figCell = {};
         x = 0:netNeurons;
-        areaTopkNum = {x(1:find(x == 0.2)), x};
+        areaTopkNum = {x(1:find(x == 0.2*netNeurons))/netNeurons, x/netNeurons};
         areaArr = zeros(numel(spsMetric), numel(covMetric)+1, numel(areaTopkNum));
               
 
@@ -12,48 +12,16 @@ function areaArr = plotTopkAnalyze(savepath, plotmode, topkData, spsMetric, covM
             topkRateCell{end+1} = reshape(topkData(sps,:,:), [numel(covMetric)+1 netNeurons]);
             topkRateCell{sps} = cat(2, zeros(numel(covMetric)+1, 1), topkRateCell{sps});
             curveDataPage = reshape(topkRateCell{sps}',[1 size(topkRateCell{sps},2) numel(covMetric)+1]);
-        
-            figCell{end+1} = figure;
-            figure(figCell{sps})
-            covCurveCell = cell(1,(numel(covMetric)+1));
-
+            
             ncData = curveDataPage(:,:,1);
-            % 'LineWidth', 1.5, 'MarkerSize', 6
-            covCurveCell{1} = plot(x, ncData, '-*', 'Color', '#B22222', 'LineWidth', 1.5, 'MarkerSize', 6);
-            hold('on')
-        
             tkData = curveDataPage(:,:,2);
-            covCurveCell{2} = plot(x, tkData, '-.square', 'Color', [0.48235 0.40784 0.93333], 'LineWidth', 1.5, 'MarkerSize', 6);
-            hold('on')
-        
             tncData = curveDataPage(:,:,3);
-            covCurveCell{3} = plot(x, tncData, '--diamond', 'Color', [0.11765 0.56741 1], 'LineWidth', 1.5, 'MarkerSize', 6);
-            hold('on')
-        
             ttkData = curveDataPage(:,:,4);
-            covCurveCell{4} = plot(x, ttkData, '-^', 'Color', '#2E8B57', 'LineWidth', 1.5, 'MarkerSize', 6);
-            hold('on')
-        
             pdData = curveDataPage(:,:,5);
-            covCurveCell{5} = plot(x, pdData, '--o', 'Color', '#FFA500', 'LineWidth', 1.5, 'MarkerSize', 6);
-            hold('on')
-        
             ndData = curveDataPage(:,:,6);
-            covCurveCell{6} = plot(x, ndData, '-.o', 'Color', '#DC143C', 'LineWidth', 1.5, 'MarkerSize', 6);
-            hold('on')
-        
             miData = curveDataPage(:,:,7);
-            covCurveCell{7} = plot(x, miData, '-^', 'Color', '#8B4513', 'LineWidth', 1.5, 'MarkerSize', 6);
-            hold('on')
-        
             mdData = curveDataPage(:,:,8);
-            covCurveCell{8} = plot(x, mdData, '-x', 'Color', '#696969', 'LineWidth', 1.5, 'MarkerSize', 6);
-            hold('on')
-        
-            randData = curveDataPage(:,:,9);
-            covCurveCell{9} = plot(x, randData, ':x', 'LineWidth', 1.5, 'MarkerSize', 6);
-            hold('off')
-
+            randData = curveDataPage(:,:,9); 
             for perIdx = 1:numel(areaTopkNum)
                 areaArr(sps, 1, perIdx) = trapz(areaTopkNum{perIdx}, ncData(1:numel(areaTopkNum{perIdx})) );
                 areaArr(sps, 2, perIdx) = trapz(areaTopkNum{perIdx}, tkData(1:numel(areaTopkNum{perIdx})) );
@@ -65,6 +33,38 @@ function areaArr = plotTopkAnalyze(savepath, plotmode, topkData, spsMetric, covM
                 areaArr(sps, 8, perIdx) = trapz(areaTopkNum{perIdx}, mdData(1:numel(areaTopkNum{perIdx})) );
                 areaArr(sps, 9, perIdx) = trapz(areaTopkNum{perIdx}, randData(1:numel(areaTopkNum{perIdx})) );
             end
+
+            figCell{end+1} = figure;
+            figure(figCell{sps})
+            covCurveCell = cell(1,(numel(covMetric)+1));
+
+            % 'LineWidth', 1.5, 'MarkerSize', 6
+            covCurveCell{1} = plot(x, ncData, '-*', 'Color', '#B22222', 'LineWidth', 1.5, 'MarkerSize', 6);
+            hold('on')
+
+            covCurveCell{2} = plot(x, tkData, '-.square', 'Color', [0.48235 0.40784 0.93333], 'LineWidth', 1.5, 'MarkerSize', 6);
+            hold('on')
+
+            covCurveCell{3} = plot(x, tncData, '--diamond', 'Color', [0.11765 0.56741 1], 'LineWidth', 1.5, 'MarkerSize', 6);
+            hold('on')
+
+            covCurveCell{4} = plot(x, ttkData, '-^', 'Color', '#2E8B57', 'LineWidth', 1.5, 'MarkerSize', 6);
+            hold('on')
+
+            covCurveCell{5} = plot(x, pdData, '--o', 'Color', '#FFA500', 'LineWidth', 1.5, 'MarkerSize', 6);
+            hold('on')
+
+            covCurveCell{6} = plot(x, ndData, '-.o', 'Color', '#DC143C', 'LineWidth', 1.5, 'MarkerSize', 6);
+            hold('on')
+
+            covCurveCell{7} = plot(x, miData, '-^', 'Color', '#8B4513', 'LineWidth', 1.5, 'MarkerSize', 6);
+            hold('on')
+
+            covCurveCell{8} = plot(x, mdData, '-x', 'Color', '#696969', 'LineWidth', 1.5, 'MarkerSize', 6);
+            hold('on')
+
+            covCurveCell{9} = plot(x, randData, ':x', 'LineWidth', 1.5, 'MarkerSize', 6);
+            hold('off')
 
             if strcmp(bmName(1:4), 'WT#1')
                 xticks(0:2:netNeurons);
@@ -80,20 +80,20 @@ function areaArr = plotTopkAnalyze(savepath, plotmode, topkData, spsMetric, covM
 
             xlabel('s (#suspicious neurons)','FontSize',18, 'FontName','Times New Roman');
             ylabel('detection rate DR','FontSize',18, 'FontName','Times New Roman');
-            
+
             lgd = legend('INA\qquad', 'ITK\qquad', 'PNA\qquad', 'PTK\qquad', 'PD\qquad', 'ND\qquad', 'MI\qquad', 'MD\qquad', 'Random');
             lgd.Box = 'off';
             set(lgd,'FontName','Times New Roman','FontSize',15 ,'FontWeight','normal', ...
                     'TextColor','black','orientation','horizontal', 'Interpreter', 'latex', ...
                     'Location', 'southeast', 'Visible', 'on', 'NumColumns', 1); 
             lgd.Visible = "on";
-            
+
             bm = bmName(1:strfind(bmName, '#')-1);
             spec = str2num(bmName(strfind(bmName, '}^{')+3));
             regname = sprintf('%s#%s_spec%d', bm, bmName(strfind(bmName, '#')+1), spec);
             titleName = ['$\mathbf{', bm, '\#', bmName(strfind(bmName, '#')+1), '{-}\varphi_{', num2str(spec), '}}$'];
             title(titleName, 'Interpreter','latex', 'FontSize', 18, 'FontName','Times New Roman');       
-            
+
             figFilename = sprintf('%s_%s', regname, spsMetric{sps});
             fig = gcf;
             fig.PaperPositionMode = 'auto';
