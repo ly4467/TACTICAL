@@ -6,8 +6,7 @@ clear;
 close all;
 clc;
 bdclose('all');
-addpath(genpath('/Users/ly/Desktop/TACTICAL'));
-addpath(genpath('/Users/ly/Desktop'));
+addpath(genpath('~/TACTICAL'));
 
 path = '~/mut2_liyi';
 folderPath = dir(path);

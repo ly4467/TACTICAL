@@ -15,4 +15,4 @@ addpath(genpath('/Users/ly/Desktop'));
 %     transData_multi(targetFile, 1);
 %     movefile(fullfile(targetFile, 'transDataProcessed'), fullfile(newfolder, folderPath(i).name))
 % end
-transData('mutationdata_multi/AFC_3_15_spec4_mut2', 1);
+transData('mutationdata_multi/AFC_4_15_spec3_mut2', 1);
