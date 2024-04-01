@@ -1,10 +1,10 @@
 # TACTICAL
 
-This repository reports the code and the benchmarks for the paper "Tactical: Fault Localization of AI-Enabled Cyber-Physical Systems by Exploiting Temporal Neuron Activation".
+This repository reports the code and the benchmarks for the paper "Fault Localization of AI-Enabled Cyber-Physical Systems by Exploiting Temporal Neuron Activation".
 
 ## Abstract:
 
-Modern cyber-physical systems (CPS) are evolving to integrate deep neural networks (DNNs) as controllers, leading to the emergence of AI-enabled CPSs. However, an inadequately trained DNN controller may produce incorrect control decisions, exposing the systems to huge safety risks. To prevent unsafe behaviors from happening, it is crucial to localize the faulty neurons in DNN controllers, thereby providing valuable references for further system re-engineering. However, since unsafe system behaviors typically arise from a sequence of control decisions, establishing a connection between faulty neurons and unsafe behaviors is extremely challenging. To tackle this problem, we propose TACTICAL that localizes the faults in AI-enabled CPS by exploiting neuron activation criteria that incorporate temporal aspects of DNN controller inferences. Based on the executions of test cases, we construct a spectrum for each neuron, which records the information including the specification satisfaction of each system execution and the activation status of the neuron in the system execution. Having the spectra of all neurons, we apply existing suspiciousness metrics to compute a suspiciousness score for each neuron, by which we select the most suspicious ones. We experimentally evaluate TACTICAL on 12 AI-enabled CPS benchmarks spanning over different domains, by injecting artificial faults into their DNN controllers. The results shows the effectiveness of TACTICAL, based on comparisons with a baseline approach and over different configurations. Moreover, we study the influence of hyperparameters to the effectiveness of TACTICAL, and thereby provide suggestions on hyperparameter selection.
+Modern cyber-physical systems (CPS) are evolving to integrate deep neural networks (DNNs) as controllers, leading to the emergence of AI-enabled CPSs. Despite its advantages, an inadequately trained DNN controller may produce incorrect control actions, exposing the system to huge safety risks. Therefore, it is crucial to localize the faulty neurons of the DNN controller that are responsible for the wrong decisions; these neurons can be later fixed, for example, by automated repair. However, since an unsafe system behavior typically arises from a sequence of control actions, establishing a connection between unsafe behaviors and faulty neurons is extremely challenging. To address this problem, we propose TACTICAL that localizes faults in an AI-enabled CPS by exploiting temporal neuron activation criteria that capture temporal aspects of the DNN controller inferences. Specifically, based on the executions of test cases, for each neuron, TACTICAL constructs a spectrum, which considers the specification satisfaction and the evolution of the activation status of the neuron during the system execution. Then, starting from the spectra of all the neurons, TACTICAL applies suspiciousness metrics to compute a suspiciousness score for each neuron, from which the most suspicious ones are selected. We experimentally evaluate TACTICAL configured with eight temporal neuron activation criteria, on 3860 faulty AIenabled CPS benchmarks spanning over different domains. The results show the effectiveness of TACTICAL w.r.t. a baseline approach. Moreover, the experiments assess the influence of the different temporal neuron activation criteria, hyperparameters, and suspiciousness metrics on the effectiveness of TACTICAL.
 
 <div align=center><img width="80%" height="80%" src="figs/workflow.png"></div>
 
@@ -121,40 +121,9 @@ How to reproduce the experimental results
 
 ## Extended experimental results
 
-### RQ1: Does Tactical effectively localize the faulty neurons in an AI-enabled CPS?
+## RQ1: Is TACTICAL better than a random localization approach which selects the neurons randomly? 
 
-This RQ aims to explore whether the TACTICAL method can successfully capture neurons with errors. Here is a supplementary histogram comparing this method with the random method to more intuitively display the effect. Under each different benchmark, a set of parameters most suitable for this application scenario are used for comparison, tops uses the top 20% number of neurons. Consistent with the paper, D* is used as the metric. If you need to get the code for the following histogram, you can get it by running the `figs/comparetoRandBar.m` file. 
-
-#### RQ1 Discussion
-
-- It can be seen from the figure below that under the conditions of the first 20% of screening, this method has great advantages over random in most cases, which illustrates the effectiveness of the method on the other hand. 
-
-- In some cases, particularly in the benchmark of AFC#2_phi3, the expected results were not achieved satisfactorily. Specifically, concerning the identification of faulty neurons, the criteria employed by PTK and MD still demonstrated suboptimal performance, with recognition rates approaching randomness. Through experimentation, it was observed that this discrepancy arose from the utilization of different neural network controllers in various benchmarks, each exhibiting distinct output characteristics. During the output process, these characteristics did not entirely align with the behavioral features defined by each criterion. 
-
-- Future research endeavors will focus on exploring more effective criteria based on these diverse output characteristics, aiming to pinpoint error occurrences and enhance the ability of criteria to better elucidate the behavioral patterns of AI controllers, improve the accuracy of fault localization.
-
-<center class="half">
-<img src="figs/RQ1/RQ1_bar/ACC_3_15_spec1.jpg" width="20%"/>
-<img src="figs/RQ1/RQ1_bar/ACC_3_15_spec2.jpg" width="20%"/>
-<img src="figs/RQ1/RQ1_bar/ACC_4_10_spec1.jpg" width="20%"/>
-<img src="figs/RQ1/RQ1_bar/ACC_4_10_spec2.jpg" width="20%"/>
-</center>
-
-<center class="half">
-<img src="figs/RQ1/RQ1_bar/AFC_3_15_spec3.jpg" width="20%"/>
-<img src="figs/RQ1/RQ1_bar/AFC_3_15_spec4.jpg" width="20%"/>
-<img src="figs/RQ1/RQ1_bar/AFC_4_15_spec3.jpg" width="20%"/>
-<img src="figs/RQ1/RQ1_bar/AFC_4_15_spec4.jpg" width="20%"/>
-</center>
-
-<center class="half">
-<img src="figs/RQ1/RQ1_bar/WT_3_5_spec5.jpg" width="20%"/>
-<img src="figs/RQ1/RQ1_bar/WT_3_15_spec5.jpg" width="20%"/>
-<img src="figs/RQ1/RQ1_bar/SC_4_10_spec6.jpg" width="20%"/>
-<img src="figs/RQ1/RQ1_bar/SC_4_15_spec6.jpg" width="20%"/>
-</center>
-
-According to the description in RQ3 of the paper, "We also observe that Kulczynski2 and D* exhibit the best performance, as both of them outperform other metrics in at least 50% of the cases." Due to paper space limitations, only results of the D* metric in RQs are displayed, we also want to display results of Kulczynski2，hereinafter referred to as "Ku2". The following are the RQ1 results of Ku2.
+This RQ assesses whether TACTICAL provides any effective guidance for fault localization, whether the TACTICAL method can successfully capture neurons with errors in other words. Firstly, according to Cohen's d effect size statistical method, among the 48 different methods, only when the threshold of ND is S and the time interval is L does it perform moderately better than the random method. The other 47 methods are significantly superior to random, which indicates the effectiveness of the proposed method in this paper. Additionally, based on Fig. 4 in the paper, we plotted ROC curves for all parameters and different configurations. Furthermore, we supplemented the presentation with example images using Kulczynski2 to illustrate the effectiveness of different benchmarks, hereinafter referred to as "Ku2".
 
 <center class="half">
 <img src="figs/RQ1/RQ1_ku2/ACC_1_spec1_alphaKulczynski2.jpg" width="20%"/>
@@ -177,6 +146,51 @@ According to the description in RQ3 of the paper, "We also observe that Kulczyns
 <img src="figs/RQ1/RQ1_ku2/SC_2_spec6_alphaKulczynski2.jpg" width="20%"/>
 </center>
 
+According to the description in RQ4 of the paper, " We observe that Kulczynski2 is the best metric, followed by D*", we also want to display results of D*. The following are the RQ1 results of D*.
+
+<center class="half">
+<img src="figs/RQ1/RQ1_Dstar/ACC_1_spec1_alphaDstar.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_Dstar/ACC_1_spec1_alphaDstar.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_Dstar/ACC_2_spec1_alphaDstar.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_Dstar/ACC_2_spec2_alphaDstar.jpg" width="20%"/>
+</center>
+
+<center class="half">
+<img src="figs/RQ1/RQ1_Dstar/AFC_1_spec3_alphaDstar.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_Dstar/AFC_1_spec4_alphaDstar.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_Dstar/AFC_2_spec3_alphaDstar.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_Dstar/AFC_2_spec4_alphaDstar.jpg" width="20%"/>
+</center>
+
+<center class="half">
+<img src="figs/RQ1/RQ1_Dstar/WT_1_spec5_alphaDstar.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_Dstar/WT_2_spec5_alphaDstar.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_Dstar/SC_1_spec6_alphaDstar.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_Dstar/SC_2_spec6_alphaDstar.jpg" width="20%"/>
+</center>
+
+Here is a supplementary histogram comparing this method with the random method to more intuitively display the effect. Under each different benchmark, a set of parameters most suitable for this application scenario are used for comparison, tops uses the top 20% number of neurons. Consistent with the paper, D* is used as the metric. If you need to get the code for the following histogram, you can get it by running the `figs/comparetoRandBar.m` file. 
+
+<center class="half">
+<img src="figs/RQ1/RQ1_bar/ACC_3_15_spec1.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/ACC_3_15_spec2.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/ACC_4_10_spec1.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/ACC_4_10_spec2.jpg" width="20%"/>
+</center>
+
+<center class="half">
+<img src="figs/RQ1/RQ1_bar/AFC_3_15_spec3.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/AFC_3_15_spec4.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/AFC_4_15_spec3.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/AFC_4_15_spec4.jpg" width="20%"/>
+</center>
+
+<center class="half">
+<img src="figs/RQ1/RQ1_bar/WT_3_5_spec5.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/WT_3_15_spec5.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/SC_4_10_spec6.jpg" width="20%"/>
+<img src="figs/RQ1/RQ1_bar/SC_4_15_spec6.jpg" width="20%"/>
+</center>
 
 Due to the excessive amount of content associated with presenting the results for RQ1 under all suspiciousness metrics, only the results for Kulczynski2 are supplemented here. The analysis results for the remaining metrics can be found in the directory `figs\RQ1`. Here, additional analyses are provided for the top 20% conditions, showcasing results for each distinct benchmark under all metrics. The table results for this analysis can be obtained by executing the provided file `figs/valRate.m`.
 
@@ -184,16 +198,25 @@ Due to the excessive amount of content associated with presenting the results fo
 
 <div align=center><img width="60%" height="60%" src="figs/RQ1/RQ1_allmetallsps_20p/conclusionTab.jpg"></div>
 
-### RQ2: How does the selection of hyperparameters of the neuron activation criteria affect the effectiveness of Tactical?
 
-This research question (RQ) meticulously elucidates the impact of parameter selection on experimental outcomes and provides users with comprehensive guidance for parameter selection. Similar to RQ1, the experimental results for all metrics employed in the paper, excluding D*, are supplemented here.
+#### RQ1 Discussion
 
-#### RQ2 Discussion
-- It was demonstrated in RQ3 that the best metrics are D* and Ku2, through the comparison between the best metrics D* and Ku2, we can find the difference between them is not very big, and both can help users accurately locate errors and obtain better results. The assertion put forth in the paper, stating that 'there is no single value that is consistently better than the others for all the benchmarks,' is validated across all metrics here. Each benchmark necessitates the establishment of either strict or lenient parameters based on the specific application context to achieve optimal recognition outcomes. However, the distinctions in the optimal parameter settings for different metrics are marginal.
-  
-  - **Note**: While there may not be significant differences in optimal parameter selection, the results from RQ1 indicate that there can be substantial variations in the accuracy of analysis outcomes. Users are advised to refer to the data provided in RQ2 to select the appropriate metric and criterion for application) 
+- It can be seen from the figure below that under the conditions of the first 20% of screening, this method has great advantages over random in most cases, which illustrates the effectiveness of the method on the other hand. 
 
-- In other words, the impact of the stringency of parameter selection for a specific benchmark is minimal with respect to different metrics, and is predominantly determined by the nature of the AI controller and the application scenario. If you intend to utilize other metrics for fault localization, it is recommended to consider the parameter selection insights provided in the paper, specifically the result analysis conducted for the D* metric. The findings for D* can serve as a valuable reference for parameter selection when applying alternative metrics in fault localization.
+- In some cases, particularly in the benchmark of AFC#2_phi3, the expected results were not achieved satisfactorily. Specifically, concerning the identification of faulty neurons, the criteria employed by PTK and MD still demonstrated suboptimal performance, with recognition rates approaching randomness. Through experimentation, it was observed that this discrepancy arose from the utilization of different neural network controllers in various benchmarks, each exhibiting distinct output characteristics. During the output process, these characteristics did not entirely align with the behavioral features defined by each criterion. 
+
+- Future research endeavors will focus on exploring more effective criteria based on these diverse output characteristics, aiming to pinpoint error occurrences and enhance the ability of criteria to better elucidate the behavioral patterns of AI controllers, improve the accuracy of fault localization.
+
+
+### RQ2: How does the selection of hyperparameters of the eight temporal neuron activation criteria affect the effective-ness of TACTICAL? 
+
+This RQ identifies the best setting for the hyperparameters of the criteria. In this paper, for RQ2, we consolidate, organize, and analyze fault localization data generated by all six metrics. Utilizing statistical methods, we determine the optimal parameter configurations for each criterion. This approach allows for a better integration of all data, leading to the identification of optimal parameter combinations applicable to a wider range of scenarios (single or multiple faulty benchmarks). However, in practical situations, the selection of metrics should be considered to enhance performance. In the following sections, a demonstration example will be provided for the case of single faulty benchmarks.
+
+The article also presents the results of fault localization obtained after generating data from three faulty benchmarks ("Finally, in a similar way, we produce faulty benchmarks containing three faults (set Fbenchs3), by randomly merging one faulty benchmark from Fbenchs1 and one from Fbenchs2"). Here, we provide additional results of comprehensive analysis obtained from generating data from two faulty benchmarks for comparison.
+
+<div align=center><img width="60%" height="60%" src="figs/RQ2/RQ2cohensd.png"></div>
+
+Given that single faulty benchmark cases are more commonly encountered in practical scenarios, this analysis focuses on such cases, we also prepared the RQ2 data analysis results by manually selecting the optimal parameters. In case a criterion has two hyperparameters hp1 and hp2 , when reporting the values of hp1 , we average across the results of hp2 , and the other way round. Here, the analysis is conducted on individual faulty benchmarks, and the results generated by different metrics are analyzed accordingly. The localization results can vary between single and multiple faulty benchmarks, and the choice between them can be made based on specific requirements or practical needs. Based on the results obtained from RQ4, it is recommended that readers refer to the results of D* and Kulczynski2, as these two metrics exhibit better performance.
 
 #### Tarantula
 <div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2Tarantula_table.png"></div>
@@ -207,9 +230,6 @@ This research question (RQ) meticulously elucidates the impact of parameter sele
 #### Jaccard
 <div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2Jaccard_table.png"></div>
 
-#### Kulczynski1
-<div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2ku1_table.png"></div>
-
 #### Kulczynski2
 <div align=center><img width="80%" height="80%" src="figs/RQ2/RQ2ku2_table.png"></div>
 
@@ -218,14 +238,43 @@ In the table, the first entry in the row corresponding to the INA parameter is 4
 
 <div align=center><img width="40%" height="40%" src="figs/RQ2/supplementTable.png"></div>
 
+#### RQ2 Discussion
 
-### RQ3: How does the selection of suspiciousness metric affect the effectiveness of Tactical?
+- The data obtained from two faulty benchmarks reveal that, compared to the results presented in the paper, there is not a significant difference in the optimal parameters for TACTICAL. Only PTK exhibits notable changes, where the optimal threshold shifts from S to L. However, for both single and three faulty benchmarks, the optimal results indicate that a threshold of S and a topk value of L provide better localization. MD's optimal parameters vary between M and L, suggesting that the difference in performance between these two parameters for fault localization is minimal. By comparing the results from one to three faulty benchmarks, it is evident that ITK and MD require careful consideration. S performs best for single cases, while using L in multi-case scenarios enables the localization of more faults.
 
-- The paper presents a comparative analysis among different metrics, and here, an alternative perspective is provided. Across 12 distinct benchmarks, the occurrences of optimal performance for each criterion under a specific metric are observed. For instance, in the table below, the first row and the eighth column indicate that Tarantula under the metric MD achieved better performance in 5 benchmarks compared to other metrics. The table is presented below, and both this table and the one provided in Research Question 3 (RQ3) in the paper reveal that the metrics D* and Ku2 exhibit superior performance.
+- It was demonstrated in RQ4 that the best metrics are D* and Ku2, through the comparison between the best metrics D* and Ku2, we can find the difference between them is not very big, and both can help users accurately locate errors and obtain better results. 'There is no single value that is consistently better than the others for all the benchmarks' is validated across all metrics here. Each benchmark necessitates the establishment of either strict or lenient parameters based on the specific application context to achieve optimal recognition outcomes. However, the distinctions in the optimal parameter settings for different metrics are marginal.
+  
+  - **Note**: While there may not be significant differences in optimal parameter selection, the results from RQ1 indicate that there can be substantial variations in the accuracy of analysis outcomes. Users are advised to refer to the data provided in RQ2 to select the appropriate metric and criterion for application) 
 
-- This table presents a discrepancy compared to the table showcased in RQ3 of the paper. From this table, it appears that Tarantula is not the worst-performing metric in this approach; in fact, it demonstrates relatively good performance. Simultaneously, Jaccard, Ochiai, and Kulczynski1 exhibit suboptimal performance. However, it's important to note that this table only accounts for extreme cases of optimal performance and does not consider the overall comprehensive performance of metrics across all benchmarks. The table provided in RQ3 integrates the average performance across all benchmarks, offering a more objective assessment of strengths and weaknesses.
+- In other words, the impact of the stringency of parameter selection for a specific benchmark is minimal with respect to different metrics, and is predominantly determined by the nature of the AI controller and the application scenario. If you intend to utilize other metrics for fault localization, it is recommended to consider the parameter selection insights provided in the paper, specifically the result analysis conducted for the Ku2 metric. The findings for Ku2 can serve as a valuable reference for parameter selection when applying alternative metrics in fault localization.
+
+
+### RQ3: How does the used temporal neuron activation criterion Cr affect the effectiveness of TACTICAL? 
+
+This RQ identifies the criterion that provides the best guidance in fault localization. Here are the analysis results for the case of two faulty benchmarks, presented in the table below:
+<div align=center><img width="40%" height="40%" src="figs/RQ3/RQ3cohens.png"></div>
+
+#### RQ3 Discussion
+
+- From the table, it is evident that PNA remains the best-performing criterion. Similarly, upon examining the results for the case of single faulty benchmarks, PNA consistently maintains its superiority, achieving a "medium better" effect compared to all other criteria. It is recommended that users consider using PNA more frequently in practical applications. INA follows closely behind PNA in all scenarios, demonstrating excellent identification performance. Incorporating suitable thresholds to filter faulty benchmarks can lead to improved results, a point that will be further explored and validated through additional experiments in future work.
+
+- On the other hand, PTK and ITK perform poorly, indicating that the output values of neurons do not effectively aid the system in identifying errors compared to the output sizes of other neurons in the same layer. MD also exhibits poor performance, suggesting a certain association with the output patterns of neurons, which will be addressed in subsequent work as it fails to capture distinctive features of erroneous outputs.
+
+### RQ4: How does the selection of the suspiciousness metric SMet affect the effectiveness of TACTICAL?
+
+Here are the analysis results for the case of two faulty benchmarks, presented in the table below. From the table, it can be observed that there is no difference between the results for two and three faulty benchmarks. This indicates that in all experimental conditions, D* and Ku2 demonstrate the best performance.
+<div align=center><img width="40%" height="40%" src="figs/RQ4/RQ4cohens.png"></div>
+
+Here are the results for the condition of single faulty benchmarks, presented in the table below. The paper presents a comparative analysis among different metrics, and here, an alternative perspective is provided.
+<div align=center><img width="40%" height="40%" src="figs/RQ4/diffmetcompare.png"></div>
+
+#### RQ4 Discussion
+
+In this table, Tarantula's performance shows some improvement. However, it is still not recommended for users to select it, as it does not achieve satisfactory results in most cases. Across 12 distinct benchmarks, the occurrences of optimal performance for each criterion under a specific metric are observed. For instance, the first row and the eighth column indicate that Tarantula under the metric MD achieved better performance in 5 benchmarks compared to other metrics. The table is presented below, and both this table and the one provided in Research Question 4 (RQ4) in the paper reveal that the metrics D* and Ku2 exhibit superior performance.
+
+This table presents a discrepancy compared to the table showcased in RQ4 of the paper. From this table, it appears that Tarantula is not the worst-performing metric in this approach; in fact, it demonstrates relatively good performance. Simultaneously, Jaccard, Ochiai, and Kulczynski1 exhibit suboptimal performance. However, it's important to note that this table only accounts for extreme cases of optimal performance and does not consider the overall comprehensive performance of metrics across all benchmarks. The table provided in RQ4 integrates the average performance across all benchmarks, offering a more objective assessment of strengths and weaknesses.
 
   - For instance, Ochiai achieves the best performance in a limited number of cases but boasts excellent overall performance when considering all benchmarks. Consequently, it secures the second-best overall performance. Tarantula attains the best performance more frequently but exhibits suboptimal performance in the majority of benchmarks, as reflected in the data table from RQ1.
 
-<div align=center><img width="40%" height="40%" src="figs/RQ3/diffmetcompare.png"></div>
+
 

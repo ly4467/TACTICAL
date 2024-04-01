@@ -12,8 +12,8 @@ function transData(folder_path, transData_mode)
         newfolderPath = fullfile(fileList(1).folder, newfolderName);
     
         mkdir(newfolderPath)
-        % parfor i = 1:numel(fileList)
-        for i = 1:numel(fileList)
+        parfor i = 1:numel(fileList)
+        % for i = 1:numel(fileList)
             warning('off', 'all');
             reg = load(fullfile(fileList(i).folder, fileList(i).name));
             weightMut = reg.cur_bug;

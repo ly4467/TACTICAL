@@ -92,151 +92,21 @@ AUC_Bench_App_Kulczynski2 = [
 0.03594 	0.09115 	0.05121 	0.05410 	0.05818 	0.06709 	0.03904 	0.08280 	0.05470 	0.04960 	0.06130 	0.05447 	0.07712 	0.05229 	0.05572 	0.05972 	0.05123 	0.06966 	0.05969 	0.05110 	0.06982 	0.05952 	0.05132 	0.06984 	0.03614 	0.07326 	0.05408 	0.03662 	0.08827 	0.05278 	0.03660 	0.08799 	0.05293 	0.03638 	0.05551 	0.05342 	0.03651 	0.06190 	0.05746 	0.03684 	0.06942 	0.05428 	0.09988 	0.11197 	0.10625 	0.06856 	0.10638 	0.10714 	0.02000 
 ];
 
-app_num = size(AUC_Bench_App_Tarantula, 2)-1;
+allData = {AUC_Bench_App_Tarantula, AUC_Bench_App_Ochiai, AUC_Bench_App_Dstar, AUC_Bench_App_Jaccard, AUC_Bench_App_Kulczynski1, AUC_Bench_App_Kulczynski2};
+allDataArr = cat(1, allData{1}, allData{2}, allData{3}, allData{4}, allData{5}, allData{6});
 
-% initialize matrix to store d
-matrix_d_Tarantula = zeros(app_num, app_num);
-matrix_d_Ochiai = zeros(app_num, app_num);
-matrix_d_Dstar = zeros(app_num, app_num);
-matrix_d_Jaccard = zeros(app_num, app_num);
-matrix_d_Kulczynski1 = zeros(app_num, app_num);
-matrix_d_Kulczynski2 = zeros(app_num, app_num);
-
-for i = 1:app_num
-    for j = 1:app_num
-        % calculate the Cohen's d effect size
-        matrix_d_Tarantula(i, j) = computeCohen_d(AUC_Bench_App_Tarantula(:, i), AUC_Bench_App_Tarantula(:, j), 'paired');
-        matrix_d_Ochiai(i, j) = computeCohen_d(AUC_Bench_App_Ochiai(:, i), AUC_Bench_App_Ochiai(:, j), 'paired');
-        matrix_d_Dstar(i, j) = computeCohen_d(AUC_Bench_App_Dstar(:, i), AUC_Bench_App_Dstar(:, j), 'paired');
-        matrix_d_Jaccard(i, j) = computeCohen_d(AUC_Bench_App_Jaccard(:, i), AUC_Bench_App_Jaccard(:, j), 'paired');
-        matrix_d_Kulczynski1(i, j) = computeCohen_d(AUC_Bench_App_Kulczynski1(:, i), AUC_Bench_App_Kulczynski1(:, j), 'paired');
-        matrix_d_Kulczynski2(i, j) = computeCohen_d(AUC_Bench_App_Kulczynski2(:, i), AUC_Bench_App_Kulczynski2(:, j), 'paired');
-    end
+cohensDataArr = zeros(1, size(allDataArr, 2)-1);
+for i = 1:size(allDataArr, 2)-1
+    cohensDataArr(i) = computeCohen_d(allDataArr(:,i), allDataArr(:,end), 'paired');
 end
-
-new_cohensd_matrix_tarantula = string(matrix_d_Tarantula);
-new_cohensd_matrix_ochiai = string(matrix_d_Ochiai);
-new_cohensd_matrix_dstar = string(matrix_d_Dstar);
-new_cohensd_matrix_jaccard = string(matrix_d_Jaccard);
-new_cohensd_matrix_kulczynski1 = string(matrix_d_Kulczynski1);
-new_cohensd_matrix_kulczynski2 = string(matrix_d_Kulczynski2);
-
-[large_worse, medium_worse, small_worse, small_better, medium_better, large_better] = label(matrix_d_Tarantula);
-
-new_cohensd_matrix_tarantula(large_worse) = 'large_worse';
-new_cohensd_matrix_tarantula(medium_worse) = 'medium_worse';
-new_cohensd_matrix_tarantula(small_worse) = 'small_worse';
-new_cohensd_matrix_tarantula(small_better) = 'small_better';
-new_cohensd_matrix_tarantula(medium_better) = 'medium_better';
-new_cohensd_matrix_tarantula(large_better) = 'large_better';
-
-[large_worse, medium_worse, small_worse, small_better, medium_better, large_better] = label(matrix_d_Ochiai);
-
-new_cohensd_matrix_ochiai(large_worse) = 'large_worse';
-new_cohensd_matrix_ochiai(medium_worse) = 'medium_worse';
-new_cohensd_matrix_ochiai(small_worse) = 'small_worse';
-new_cohensd_matrix_ochiai(small_better) = 'small_better';
-new_cohensd_matrix_ochiai(medium_better) = 'medium_better';
-new_cohensd_matrix_ochiai(large_better) = 'large_better';
-
-[large_worse, medium_worse, small_worse, small_better, medium_better, large_better] = label(matrix_d_Dstar);
-
-new_cohensd_matrix_dstar(large_worse) = 'large_worse';
-new_cohensd_matrix_dstar(medium_worse) = 'medium_worse';
-new_cohensd_matrix_dstar(small_worse) = 'small_worse';
-new_cohensd_matrix_dstar(small_better) = 'small_better';
-new_cohensd_matrix_dstar(medium_better) = 'medium_better';
-new_cohensd_matrix_dstar(large_better) = 'large_better';
-
-[large_worse, medium_worse, small_worse, small_better, medium_better, large_better] = label(matrix_d_Jaccard);
-
-new_cohensd_matrix_jaccard(large_worse) = 'large_worse';
-new_cohensd_matrix_jaccard(medium_worse) = 'medium_worse';
-new_cohensd_matrix_jaccard(small_worse) = 'small_worse';
-new_cohensd_matrix_jaccard(small_better) = 'small_better';
-new_cohensd_matrix_jaccard(medium_better) = 'medium_better';
-new_cohensd_matrix_jaccard(large_better) = 'large_better';
-
-
-[large_worse, medium_worse, small_worse, small_better, medium_better, large_better] = label(matrix_d_Kulczynski1);
-
-new_cohensd_matrix_kulczynski1(large_worse) = 'large_worse';
-new_cohensd_matrix_kulczynski1(medium_worse) = 'medium_worse';
-new_cohensd_matrix_kulczynski1(small_worse) = 'small_worse';
-new_cohensd_matrix_kulczynski1(small_better) = 'small_better';
-new_cohensd_matrix_kulczynski1(medium_better) = 'medium_better';
-new_cohensd_matrix_kulczynski1(large_better) = 'large_better';
-
-[large_worse, medium_worse, small_worse, small_better, medium_better, large_better] = label(matrix_d_Kulczynski2);
-
-new_cohensd_matrix_kulczynski2(large_worse) = 'large_worse';
-new_cohensd_matrix_kulczynski2(medium_worse) = 'medium_worse';
-new_cohensd_matrix_kulczynski2(small_worse) = 'small_worse';
-new_cohensd_matrix_kulczynski2(small_better) = 'small_better';
-new_cohensd_matrix_kulczynski2(medium_better) = 'medium_better';
-new_cohensd_matrix_kulczynski2(large_better) = 'large_better';
-
-%% consider all suspiciousness metrics
-AUC_Bench_App_All = [AUC_Bench_App_Tarantula; AUC_Bench_App_Ochiai; AUC_Bench_App_Dstar; ...
-    AUC_Bench_App_Jaccard; AUC_Bench_App_Kulczynski1; AUC_Bench_App_Kulczynski2];
-
-matrix_d_All = zeros(app_num, app_num);
-
-% perform Wilcoxon signed-rank test to compare each pair of apps
-for i = 1:app_num
-    for j = 1:app_num
-        % calculate the Cohen's d effect size
-        matrix_d_All(i, j) = computeCohen_d(AUC_Bench_App_All(:, i), AUC_Bench_App_All(:, j), 'paired');
-    end
-end
-
-new_cohensd_matrix_all = string(matrix_d_All);
-
-[large_worse, medium_worse, small_worse, small_better, medium_better, large_better] = label(matrix_d_All);
-
-new_cohensd_matrix_all(large_worse) = 'large_worse';
-new_cohensd_matrix_all(medium_worse) = 'medium_worse';
-new_cohensd_matrix_all(small_worse) = 'small_worse';
-new_cohensd_matrix_all(small_better) = 'small_better';
-new_cohensd_matrix_all(medium_better) = 'medium_better';
-new_cohensd_matrix_all(large_better) = 'large_better';
-
-
-% %% consider all suspiciousness metrics except Jaccard
-% AUC_Bench_App_All_NoJaccard = [AUC_Bench_App_Tarantula; AUC_Bench_App_Ochiai; AUC_Bench_App_Dstar; ...
-%     AUC_Bench_App_Kulczynski1; AUC_Bench_App_Kulczynski2];
-% 
-% matrix_d_All_NoJaccard = zeros(app_num, app_num);
-% 
-% % perform Wilcoxon signed-rank test to compare each pair of apps
-% for i = 1:app_num
-%     for j = 1:app_num
-%         % calculate the Cohen's d effect size
-%         matrix_d_All_NoJaccard(i, j) = computeCohen_d(AUC_Bench_App_All_NoJaccard(:, i), AUC_Bench_App_All_NoJaccard(:, j), 'paired');
-%     end
-% end
-% 
-% new_cohensd_matrix_all_nojaccard = string(matrix_d_All_NoJaccard);
-% 
-% [large_worse, medium_worse, small_worse, small_better, medium_better, large_better] = label(matrix_d_All_NoJaccard);
-% 
-% new_cohensd_matrix_all_nojaccard(large_worse) = 'large_worse';
-% new_cohensd_matrix_all_nojaccard(medium_worse) = 'medium_worse';
-% new_cohensd_matrix_all_nojaccard(small_worse) = 'small_worse';
-% new_cohensd_matrix_all_nojaccard(small_better) = 'small_better';
-% new_cohensd_matrix_all_nojaccard(medium_better) = 'medium_better';
-% new_cohensd_matrix_all_nojaccard(large_better) = 'large_better';
-% 
-% diff = ones(13, 13);
-% for i = 1:13
-%     for j = 1:13
-%         if new_cohensd_matrix_all(i,j) ~= new_cohensd_matrix_all_nojaccard(i,j)
-%             disp(new_cohensd_matrix_all(i,j));
-%             disp(new_cohensd_matrix_all_nojaccard(i,j));
-%             diff(i,j) = 0;
-%         end
-%     end
-% end
+[large_worse, medium_worse, small_worse, small_better, medium_better, large_better] = label(cohensDataArr);
+cohensResult = string(cohensDataArr);
+cohensResult(large_worse) = 'large_worse';
+cohensResult(medium_worse) = 'medium_worse';
+cohensResult(small_worse) = 'small_worse';
+cohensResult(small_better) = 'small_better';
+cohensResult(medium_better) = 'medium_better';
+cohensResult(large_better) = 'large_better';
 
 
 function [large_worse, medium_worse, small_worse, small_better, medium_better, large_better] = label(matrix_d)
