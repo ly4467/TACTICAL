@@ -34,9 +34,11 @@ How to reproduce the experimental results
 - Users need to run the script by using the command `./scripts/[scriptname]`. After mutation processed, mutation results data are stored in the `result/`.
 
 ### RQs
-- After all benchmarks mutation processed, open the `src/RQ1part1.m` by using matlab. Users can change the path of data or the auto mode into manual mode, and run the analyzing progress. First, set `automode=1` in the `src/RQ1part1.m` file and run the analysis. All temporary data files are in the `result/[benchmarkdataname]/transDataProcessed`.
-- After completing the previous step of analysis, open `src/RQ2.m`, set the selected metric and run it. The running results will be saved in the `result/RQ2Data_[metric name].mat` file. After reading this file, manually fill in the data in the `RQ2percentage.xlsx` file to obtain the results of RQ2 in the paper, and then select the best set of parameters for each benchmark.
-- Use the parameters selected in the previous step to manually set and run in the `src/RQ1part1.m` file, set `automode=0`, and obtain the results of each benchmark in the paper RQ1.1 in `result/[benchmarkdataname]/transDataProcessed/[configs]_topkAnalyze`. Rename the `.mat` files in the directory to the same name as the benchmark and put them in one directory, e.g. `ACC_4_10_spec1.mat`. Run the `src/RQ1part2_RQ3.m` file to get the results of RQ1.2 and RQ3.
+- After all benchmarks mutation processed, open the `src/preprocess.m` by using matlab. Users can change the path of data or the auto mode into manual mode, and run the analyzing progress. First, set `automode=1` in the `src/preprocess.m` file and run the analysis. All temporary data files are in the `[dataFolder]/[benchmarkdataname]/transDataProcessed`.
+
+- Open `src/mutantCombination.m`, set the selected metric and run it. All temporary data files are in the `result/multiMutants/[benchmarkdataname]/transDataProcessed`.
+
+- After completing the previous step of analysis, run `src/RQs.m`. The running results will be saved in the `result/multiMutants/RQ2Data/AllRQsResult.mat` file. After reading this file, manually fill in the data in the `RQ2percentage.xlsx` file to obtain the results of RQ1 to RQ4 in the paper, and then select the best set of parameters for each benchmark.
 
 ## Repository Structure
 
@@ -45,76 +47,76 @@ How to reproduce the experimental results
 ├── README.md
 ├── RQ2percentage.xlsx
 ├── benchmarks
-│        ├── ACC
-│        ├── AFC
-│        ├── SC
-│        └── WT
+│     ├── ACC
+│     ├── AFC
+│     ├── SC
+│     └── WT
 ├── figs
-│        ├── RQ1
-│        │   ├── RQ1_Dstar
-│        │   ├── RQ1_Jaccard
-│        │   ├── RQ1_Ochiai
-│        │   ├── RQ1_Tarantula
-│        │   ├── RQ1_allmetallsps_20p
-│        │   ├── RQ1_bar
-│        │   ├── RQ1_ku1
-│        │   └── RQ1_ku2
-│        ├── RQ2
-│        ├── RQ3
-│        ├── comparetoRandBar.m
-│        ├── valRate.m
-│        └── workflow.png
+│     ├── RQ1
+│     ├── RQ2
+│     ├── RQ3
+│     ├── RQ4
+│     ├── comparetoRandBar.m
+│     ├── valRate.m
+│     └── workflow.png
 ├── result
 ├── src
-│        ├── CovFL.m
-│        ├── RQ1part1.m
-│        ├── RQ1part2_RQ3.m
-│        ├── RQ2.m
-│        ├── covcriteria
-│        │   ├── MDNC.m
-│        │   ├── MINC.m
-│        │   ├── NC.m
-│        │   ├── NDNC.m
-│        │   ├── PDNC.m
-│        │   ├── TPKNC.m
-│        │   ├── TTK.m
-│        │   └── TimedNC.m
-│        ├── func
-│        │   ├── autoSelect.m
-│        │   ├── bugGenerator.m
-│        │   ├── diffTopkAnalyze.m
-│        │   ├── insertWeightBug.m
-│        │   ├── nnresultEval.m
-│        │   ├── parallelAnalyzeDiffParam.m
-│        │   ├── parsaveFLinfo.m
-│        │   ├── parsaveMutInfo.m
-│        │   ├── plotTopkAnalyze.m
-│        │   ├── processBestData.m
-│        │   ├── randFL.m
-│        │   ├── readFileName.m
-│        │   ├── sigMatch.m
-│        │   ├── spsCalculator.m
-│        │   ├── spsScoreCompute.m
-│        │   ├── spstopkAnalyze.m
-│        │   └── transData.m
-│        └── util
-│            ├── neuronPlot.m
-│            └── ratePlotBar.m
+│     ├── CovFL.m
+│     ├── RQs.m
+│     ├── covcriteria
+│     │     ├── MDNC.m
+│     │     ├── MINC.m
+│     │     ├── NC.m
+│     │     ├── NDNC.m
+│     │     ├── PDNC.m
+│     │     ├── TPKNC.m
+│     │     ├── TTK.m
+│     │     └── TimedNC.m
+│     ├── func
+│     │     ├── autoSelect.m
+│     │     ├── bugGenerator.m
+│     │     ├── diffTopkAnalyze.m
+│     │     ├── insertWeightBug.m
+│     │     ├── nnresultEval.m
+│     │     ├── parallelAnalyzeDiffParam.m
+│     │     ├── parsaveFLinfo.m
+│     │     ├── parsaveMutInfo.m
+│     │     ├── plotTopkAnalyze.m
+│     │     ├── processBestData.m
+│     │     ├── randFL.m
+│     │     ├── readFileName.m
+│     │     ├── sigMatch.m
+│     │     ├── spsCalculator.m
+│     │     ├── spsScoreCompute.m
+│     │     ├── spstopkAnalyze.m
+│     │     └── transData.m
+│     ├── func_multi
+│     │     ├── autoSelect_multi.m
+│     │     ├── diffTopkAnalyze_multi.m
+│     │     ├── parallelAnalyzeDiffParam_multi.m
+│     │     └── spstopkAnalyze_multi.m
+│     ├── mutantCombination.m
+│     ├── preprocess.m
+│     └── util
+│         ├── RQ1part2_RQ3.m
+│         ├── neuronPlot.m
+│         ├── ratePlotBar.m
+│         ├── computeCohen_d.m
+│         └── license.txt
 └── test
-    ├── FL.py
     ├── config
-    │        ├── ACC
-    │        │   ├── ACC_mut_3_15
-    │        │   └── ACC_mut_4_10
-    │        ├── AFC
-    │        │   ├── AFC_mut_3_15
-    │        │   └── AFC_mut_4_15
-    │        ├── SC
-    │        │   ├── SC_mut_4_10
-    │        │   └── SC_mut_4_15
-    │        └── WT
-    │            ├── WT_mut_3_15
-    │            └── WT_mut_3_5
+    │     ├── ACC
+    │     │     ├── ACC_mut_3_15
+    │     │     └── ACC_mut_4_10
+    │     ├── AFC
+    │     │     ├── AFC_mut_3_15
+    │     │     └── AFC_mut_4_15
+    │     ├── SC
+    │     │     ├── SC_mut_4_10
+    │     │     └── SC_mut_4_15
+    │     └── WT
+    │         ├── WT_mut_3_15
+    │         └── WT_mut_3_5
     └── valFL.py
 ```
 

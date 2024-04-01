@@ -4,13 +4,16 @@ clc;
 bdclose('all');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% cd /[pathtoTACTICAL]
-% addpath(genpath('/[pathtoTACTICAL]'));
-cd /Users/ly/Desktop/TACTICAL
-addpath(genpath('/Users/ly/Desktop/TACTICAL'));
+cd /[pathtoTACTICAL]
+addpath(genpath('/[pathtoTACTICAL]'));
+
+% 'mutNum = 1' for only 1 mutant fault localization
+% 'mutNum = 2' for 2 mutants fault localization
+% 'mutNum = 123' for the synthesize of 1(mutant) + 2(mutants) + 3(mutants) fault localization
 mutNum = 1;
-dataPath = 'result/mut1';
-storagePath = 'result/mut1/RQ2Data';
+
+dataPath = 'result/multiMutants';
+storagePath = 'result/multiMutants/RQ2Data';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 maxPercent = 0:0.05:0.1;    % same as the RQ1 setting
