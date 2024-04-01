@@ -267,16 +267,3 @@ This RQ identifies the criterion that provides the best guidance in fault locali
 Here are the analysis results for the case of two faulty benchmarks, presented in the table below. From the table, it can be observed that there is no difference between the results for two and three faulty benchmarks. This indicates that in all experimental conditions, D* and Ku2 demonstrate the best performance.
 <div align=center><img width="40%" height="40%" src="figs/RQ4/RQ4cohens.png"></div>
 
-Here are the results for the condition of single faulty benchmarks, presented in the table below. The paper presents a comparative analysis among different metrics, and here, an alternative perspective is provided.
-<div align=center><img width="40%" height="40%" src="figs/RQ4/diffmetcompare.png"></div>
-
-#### RQ4 Discussion
-
-In this table, Tarantula's performance shows some improvement. However, it is still not recommended for users to select it, as it does not achieve satisfactory results in most cases. Across 12 distinct benchmarks, the occurrences of optimal performance for each criterion under a specific metric are observed. For instance, the first row and the eighth column indicate that Tarantula under the metric MD achieved better performance in 5 benchmarks compared to other metrics. The table is presented below, and both this table and the one provided in Research Question 4 (RQ4) in the paper reveal that the metrics D* and Ku2 exhibit superior performance.
-
-This table presents a discrepancy compared to the table showcased in RQ4 of the paper. From this table, it appears that Tarantula is not the worst-performing metric in this approach; in fact, it demonstrates relatively good performance. Simultaneously, Jaccard, Ochiai, and Kulczynski1 exhibit suboptimal performance. However, it's important to note that this table only accounts for extreme cases of optimal performance and does not consider the overall comprehensive performance of metrics across all benchmarks. The table provided in RQ4 integrates the average performance across all benchmarks, offering a more objective assessment of strengths and weaknesses.
-
-  - For instance, Ochiai achieves the best performance in a limited number of cases but boasts excellent overall performance when considering all benchmarks. Consequently, it secures the second-best overall performance. Tarantula attains the best performance more frequently but exhibits suboptimal performance in the majority of benchmarks, as reflected in the data table from RQ1.
-
-
-
