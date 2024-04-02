@@ -1,4 +1,4 @@
-<img width="969" alt="image" src="https://github.com/ly4467/TACTICAL/assets/74951315/b6b8bc6a-873a-454f-8c5a-e6bd74471f2a"># TACTICAL
+# TACTICAL
 
 This repository reports the code and the benchmarks for the paper "Fault Localization of AI-Enabled Cyber-Physical Systems by Exploiting Temporal Neuron Activation", submitted to ICSE 2025.
 
