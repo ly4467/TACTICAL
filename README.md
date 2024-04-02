@@ -3,13 +3,13 @@
 This repository reports the code and the benchmarks for the paper "Fault Localization of AI-Enabled Cyber-Physical Systems by Exploiting Temporal Neuron Activation", submitted to ICSE 2025.
 
 ## Abstract:
-<div style="text-align: justify">
+
 Modern *cyber-physical systems (CPS)* are evolving to integrate *deep neural networks (DNNs)* as controllers, leading to the emergence of *AI-enabled CPSs*. Despite its advantages, an inadequately trained DNN controller may produce incorrect control actions, exposing the system to huge safety risks. Therefore, it is crucial to localize the faulty neurons of the DNN controller that are responsible for the wrong decisions; these neurons can be later fixed, for example, by automated repair. However, since an unsafe system behavior typically arises from a sequence of control actions, establishing a connection between unsafe behaviors and faulty neurons is extremely challenging. To address this problem, we propose TACTICAL that localizes faults in an AI-enabled CPS by exploiting *temporal neuron activation criteria* that capture temporal aspects of the DNN controller inferences. Specifically, based on the executions of test cases, for each neuron, TACTICAL constructs a *spectrum*, which considers the specification satisfaction and the evolution of the activation status of the neuron during the system execution. Then, starting from the spectra of all the neurons, TACTICAL applies suspiciousness metrics to compute a suspiciousness score for each neuron, from which the most suspicious ones are selected. We experimentally evaluate TACTICAL configured with eight *temporal neuron activation criteria*, on 3860 faulty AI-enabled CPS benchmarks spanning over different domains. The results show the effectiveness of TACTICAL w.r.t. a baseline approach. Moreover, the experiments assess the influence of the different temporal neuron activation criteria, hyperparameters, and suspiciousness metrics on the effectiveness of TACTICAL.
-</div>
 
 <div align=center><img width="80%" height="80%" src="figs/workflow.png"></div>
 
 ## System requirement
+
 - Operating system: Linux or MacOS;
 - Matlab (Simulink/Stateflow) version: >= 2020a. (Matlab license needed)
 - Python version: >= 3.3
@@ -25,14 +25,14 @@ Modern *cyber-physical systems (CPS)* are evolving to integrate *deep neural net
 
 ## Usage
 
-How to reproduce the experimental results
+To reproduce the experimental results, two steps are necessary: the mutation process and addressing research questions (RQs).
 
 ### Mutation Process
-- The user-specified configuration files are stored under the directory `test/config/`. Replace the paths of `TACTICAL` in user-specified file under the line `addpath 1` with their own path. Users can also specify other configurations, such as bugset budget.
+- The user-specified configuration files are stored under the directory `test/config/`. Replace the paths of `TACTICAL` in user-specified file under the line `addpath 1` with their own path. Users can also specify other configurations, such as bugset and budget.
 - Navigate to the directory `test/`. Run the command `python valFL.py config/[benchmark]/[configfile]`.
 - Now the executable scripts have been generated under the directory `test/scripts/`.
 - Users need to edit the executable scripts permission using the command `chmod -R 777 scripts/*`.
-- Users need to run the script by using the command `./scripts/[scriptname]`. After mutation processed, mutation results data are stored in the `result/`.
+- Users need to run the script by using the command `./scripts/[scriptname]`. After the mutation is performed, mutation results data are stored in the `result/`.
 
 ### RQs
 - After all benchmarks mutation processed, open the `src/preprocess.m` by using matlab. Users can change the path of data or the auto mode into manual mode, and run the analyzing progress. First, set `automode=1` in the `src/preprocess.m` file and run the analysis. All temporary data files are in the `[dataFolder]/[benchmarkdataname]/transDataProcessed`.
