@@ -1,0 +1,44 @@
+#mut1
+\begin{table}[!tb]
+\centering
+\caption{RQ4 -- Statistical comparison between each pair of suspiciousness metrics. {(Legend as in Table~\ref{table:statTestsRQ2hyperparams})}}
+\label{table:statTestsRQ4suspMetr}
+\scriptsize
+\begin{tabular}{lcccccc}
+\toprule
+& Tarantula & Ochiai & D* & Jaccard & Kulczynski2 \\
+\midrule
+Tarantula & \notApplicable & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse \\
+Ochiai & \cohensdMediumBetter & \notApplicable & \cohensdSmallWorse & \cohensdMediumBetter & \cohensdMediumWorse \\
+\tbSecondBest D* & \tbSecondBest\cohensdMediumBetter &\tbSecondBest \cohensdSmallBetter & \tbSecondBest\notApplicable & \tbSecondBest\cohensdMediumBetter &\tbSecondBest \cohensdSmallWorse \\
+Jaccard & \cohensdMediumBetter & \cohensdMediumWorse & \cohensdMediumWorse & \notApplicable & \cohensdMediumWorse \\
+\tbgray Kulczynski2 & \tbgray\cohensdMediumBetter &\tbgray \cohensdMediumBetter & \tbgray\cohensdSmallBetter & \tbgray\cohensdMediumBetter &\tbgray \notApplicable \\
+\bottomrule
+\end{tabular}%}
+\end{table}
+
+
+#mut2
+
+
+
+
+#mut3
+\begin{table}[!tb]
+\centering
+\caption{RQ4 -- Statistical comparison between each pair of suspiciousness metrics. {(Legend as in Table~\ref{table:statTestsRQ2hyperparams})}}
+\label{table:statTestsRQ4suspMetr}
+\scriptsize
+\begin{tabular}{lcccccc}
+\toprule
+& Tarantula & Ochiai & D* & Jaccard & Kulczynski2 \\
+\midrule
+Tarantula & \notApplicable & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse \\
+Ochiai & \cohensdMediumBetter & \notApplicable & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdMediumWorse \\
+\tbgray D* & \tbgray\cohensdMediumBetter & \tbgray\cohensdMediumBetter & \tbgray\notApplicable & \tbgray\cohensdMediumBetter & \tbgray\cohensdMediumBetter \\
+Jaccard & \cohensdMediumBetter & \cohensdMediumWorse & \cohensdMediumWorse & \notApplicable & \cohensdMediumWorse \\
+\tbSecondBest Kulczynski2 & \tbSecondBest\cohensdMediumBetter &\tbSecondBest \cohensdMediumBetter & \tbSecondBest\cohensdMediumWorse & \tbSecondBest\cohensdMediumBetter &\tbSecondBest \notApplicable \\
+\bottomrule
+\end{tabular}%}
+\end{table}
+

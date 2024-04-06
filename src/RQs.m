@@ -4,16 +4,18 @@ clc;
 bdclose('all');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-cd /[pathtoTACTICAL]
-addpath(genpath('/[pathtoTACTICAL]'));
+% cd /[pathtoTACTICAL]
+% addpath(genpath('/[pathtoTACTICAL]'));
+cd /Users/ly/Desktop/TACTICAL
+addpath(genpath('/Users/ly/Desktop/TACTICAL'));
 
 % 'mutNum = 1' for only 1 mutant fault localization
 % 'mutNum = 2' for 2 mutants fault localization
 % 'mutNum = 123' for the synthesize of 1(mutant) + 2(mutants) + 3(mutants) fault localization
-mutNum = 1;
+mutNum = 3;
 
-dataPath = 'result/multiMutants';
-storagePath = 'result/multiMutants/RQ2Data';
+dataPath = 'result/mut3';
+storagePath = 'result/mut3/RQ2Data';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 maxPercent = 0:0.05:0.1;    % same as the RQ1 setting
@@ -35,63 +37,63 @@ bmName_SC1_spec1 = {'SC#1 S_{SC}^{6}', [10 10 10 10], [2 3 4], [5 10 15], [5 10 
 bmName_SC2_spec1 = {'SC#2 S_{SC}^{6}', [15 15 15 15], [2 3 4], [5 10 15], [5 10 15], [5 10 15]};  
 bmCell = {bmName_ACC1_spec1, bmName_ACC1_spec2, bmName_ACC2_spec1, bmName_ACC2_spec2, bmName_AFC1_spec1, bmName_AFC1_spec2, bmName_AFC2_spec1, bmName_AFC2_spec2, bmName_WT1_spec1, bmName_WT2_spec1, bmName_SC1_spec1, bmName_SC2_spec1};
 
-for bmIdx = 1:numel(bmCell)
-    bmFileName = bmCell{bmIdx}{1};
-    blankidx = strfind(bmFileName, '_');
-    bmInfo = bmCell{bmIdx};
-    bmName = bmInfo{1};
-    nnStru = bmInfo{2};
-    bm = bmName(1:strfind(bmName, '#')-1);
-    spec = str2num(bmName(strfind(bmName, '}^{')+3));
-    bmFolderName = sprintf('%s_%d_%d_spec%d_mut%d', bm, numel(nnStru), nnStru(1), spec, mutNum);
-    bmPath = fullfile(dataPath, bmFolderName);
-
-    bmDir = dir(fullfile(bmPath, 'transDataProcessed', '*_auto_*_topkAnalyze'));
-    bmDataCell = cell(1, numel(bmDir));
-
-    for f = 1:numel(bmDir)
-        configDir = dir(fullfile(bmDir(f).folder, bmDir(f).name, '*.mat'));
-        startidx = strfind(bmDir(f).name, 'percent_')+8;
-        endidx = strfind(bmDir(f).name, 'percent_')+11;
-        percentageNum = str2num(bmDir(f).name(startidx:endidx));
-        for matIdx = 1:numel(configDir)
-            if contains(configDir(matIdx).name, '_M_')
-                continue
-            end
-            reg = load(fullfile(configDir(matIdx).folder, configDir(matIdx).name));
-            bmDataCell{f}.topkData = reg.topkData;
-            bmDataCell{f}.areaArr = reg.areaArr;
-            bmDataCell{f}.percentageNum = percentageNum;
-        end
-    end
-
-    bmmatName = fullfile(storagePath, [bmFolderName, '_FLinfo.mat']);
-    save(bmmatName, 'bmDataCell')
-    fprintf('Benchmark %s finished!\n', bmFolderName)
-
-    path_onlyptk = fullfile(bmPath, 'transDataProcessed', 'onlyPTK*');
-    pathFolder = dir(path_onlyptk);
-
-    pathNameCell = {};
-    for k = 1:numel(bmCell{bmIdx}{3})
-        for time = 1:numel(bmCell{bmIdx}{4})
-            pathNameCell{end+1} = sprintf('onlyPTK_%d %d_percent_0.00_topkAnalyze', bmCell{bmIdx}{4}(time), bmCell{bmIdx}{3}(k));
-        end
-    end
-
-    bmDataCell = cell(1, numel(pathNameCell));
-    for f = 1:numel(pathNameCell) 
-        regname = dir(fullfile(pathFolder(1).folder, pathNameCell{f}, '*.mat'));
-        reg = load(fullfile(regname(1).folder, regname(1).name));
-        bmDataCell{f}.topkData = reg.topkData;
-        bmDataCell{f}.areaArr = reg.areaArr;
-        % movefile(fullfile(pathFolder(1).folder, pathNameCell{f}), fullfile(bmPath, 'RQ1preprocessdata'));
-    end
-
-    bmmatName = fullfile(storagePath, [bmFolderName, '_FLinfo_onlyPTK.mat']);
-    save(bmmatName, 'bmDataCell')
-    fprintf('Benchmark %s finished!\n', bmFolderName)
-end
+% for bmIdx = 1:numel(bmCell)
+%     bmFileName = bmCell{bmIdx}{1};
+%     blankidx = strfind(bmFileName, '_');
+%     bmInfo = bmCell{bmIdx};
+%     bmName = bmInfo{1};
+%     nnStru = bmInfo{2};
+%     bm = bmName(1:strfind(bmName, '#')-1);
+%     spec = str2num(bmName(strfind(bmName, '}^{')+3));
+%     bmFolderName = sprintf('%s_%d_%d_spec%d_mut%d', bm, numel(nnStru), nnStru(1), spec, mutNum);
+%     bmPath = fullfile(dataPath, bmFolderName);
+% 
+%     bmDir = dir(fullfile(bmPath, 'transDataProcessed', '*_auto_*_topkAnalyze'));
+%     bmDataCell = cell(1, numel(bmDir));
+% 
+%     for f = 1:numel(bmDir)
+%         configDir = dir(fullfile(bmDir(f).folder, bmDir(f).name, '*.mat'));
+%         startidx = strfind(bmDir(f).name, 'percent_')+8;
+%         endidx = strfind(bmDir(f).name, 'percent_')+11;
+%         percentageNum = str2num(bmDir(f).name(startidx:endidx));
+%         for matIdx = 1:numel(configDir)
+%             if contains(configDir(matIdx).name, '_M_')
+%                 continue
+%             end
+%             reg = load(fullfile(configDir(matIdx).folder, configDir(matIdx).name));
+%             bmDataCell{f}.topkData = reg.topkData;
+%             bmDataCell{f}.areaArr = reg.areaArr;
+%             bmDataCell{f}.percentageNum = percentageNum;
+%         end
+%     end
+% 
+%     bmmatName = fullfile(storagePath, [bmFolderName, '_FLinfo.mat']);
+%     save(bmmatName, 'bmDataCell')
+%     fprintf('Benchmark %s finished!\n', bmFolderName)
+% 
+%     path_onlyptk = fullfile(bmPath, 'transDataProcessed', 'onlyPTK*');
+%     pathFolder = dir(path_onlyptk);
+% 
+%     pathNameCell = {};
+%     for k = 1:numel(bmCell{bmIdx}{3})
+%         for time = 1:numel(bmCell{bmIdx}{4})
+%             pathNameCell{end+1} = sprintf('onlyPTK_%d %d_percent_0.00_topkAnalyze', bmCell{bmIdx}{4}(time), bmCell{bmIdx}{3}(k));
+%         end
+%     end
+% 
+%     bmDataCell = cell(1, numel(pathNameCell));
+%     for f = 1:numel(pathNameCell) 
+%         regname = dir(fullfile(pathFolder(1).folder, pathNameCell{f}, '*.mat'));
+%         reg = load(fullfile(regname(1).folder, regname(1).name));
+%         bmDataCell{f}.topkData = reg.topkData;
+%         bmDataCell{f}.areaArr = reg.areaArr;
+%         % movefile(fullfile(pathFolder(1).folder, pathNameCell{f}), fullfile(bmPath, 'RQ1preprocessdata'));
+%     end
+% 
+%     bmmatName = fullfile(storagePath, [bmFolderName, '_FLinfo_onlyPTK.mat']);
+%     save(bmmatName, 'bmDataCell')
+%     fprintf('Benchmark %s finished!\n', bmFolderName)
+% end
 
 rqDir = dir(fullfile(storagePath, '/*_FLinfo.mat'));
 rqDir_onlyptk = dir(fullfile(storagePath, '/*_onlyPTK.mat'));

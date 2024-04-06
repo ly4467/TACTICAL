@@ -1,0 +1,67 @@
+#mut1
+\begin{table}[!tb]
+\centering
+\caption{RQ3 -- Statistical comparison between the eight temporal neuron activation criteria. {(Legend as in Table~\ref{table:statTestsRQ2hyperparams})}}
+\label{table:statTestsRQ3criteria}
+\scriptsize
+\begin{tabular}{lcccccccc}
+\toprule
+& \INA & \ITK & \PNA & \PTK & \PD & \ND & \MI & \MD \\
+\midrule
+\INA & \notApplicable & \cohensdMediumBetter & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdSmallWorse & \cohensdMediumBetter & \cohensdSmallWorse & \cohensdMediumBetter \\
+\ITK & \cohensdMediumWorse & \notApplicable & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdMediumWorse & \cohensdSmallWorse & \cohensdMediumWorse & \cohensdMediumBetter\\
+\tbgray \PNA & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter & \tbgray \notApplicable & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter \\
+\PTK & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse & \notApplicable & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdSmallBetter\\
+\tbSecondBest\PD & \tbSecondBest\cohensdSmallBetter & \tbSecondBest\cohensdMediumBetter & \tbSecondBest\cohensdMediumWorse & \tbSecondBest\cohensdMediumBetter & \tbSecondBest\notApplicable & \tbSecondBest\cohensdMediumBetter & \tbSecondBest\cohensdSmallBetter & \tbSecondBest\cohensdMediumBetter\\
+\ND & \cohensdMediumWorse & \cohensdSmallBetter & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdMediumWorse & \notApplicable & \cohensdMediumWorse & \cohensdMediumBetter \\
+\MI & \cohensdSmallBetter & \cohensdMediumBetter & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdSmallWorse & \cohensdMediumBetter & \notApplicable & \cohensdMediumBetter \\
+\MD & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdSmallWorse & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse & \notApplicable \\
+\bottomrule
+\end{tabular}%}
+\end{table}
+
+
+#mut2
+\begin{table}[!tb]
+\centering
+\caption{RQ3 -- Statistical comparison between the eight temporal neuron activation criteria. {(Legend as in Table~\ref{table:statTestsRQ2hyperparams})}}
+\label{table:statTestsRQ3criteria}
+\scriptsize
+\begin{tabular}{lcccccccc}
+\toprule
+& \INA & \ITK & \PNA & \PTK & \PD & \ND & \MI & \MD \\
+\midrule
+\tbSecondBest\INA & \tbSecondBest\notApplicable & \tbSecondBest\cohensdMediumBetter & \tbSecondBest\cohensdMediumWorse & \tbSecondBest\cohensdMediumBetter & \tbSecondBest\cohensdMediumBetter & \tbSecondBest\cohensdMediumBetter & \tbSecondBest\cohensdSmallBetter & \tbSecondBest\cohensdMediumBetter \\
+\ITK & \cohensdMediumWorse & \notApplicable & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdSmallWorse & \cohensdMediumWorse & \cohensdSmallWorse & \cohensdSmallBetter\\
+\tbgray \PNA & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter & \tbgray \notApplicable & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter \\
+\PTK & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse & \notApplicable & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdSmallWorse\\
+\PD & \cohensdMediumWorse & \cohensdSmallBetter & \cohensdMediumWorse & \cohensdMediumBetter & \notApplicable & \cohensdSmallWorse & \cohensdSmallBetter & \cohensdSmallBetter\\
+\ND & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdSmallBetter & \notApplicable & \cohensdSmallBetter & \cohensdMediumBetter \\
+\MI & \cohensdSmallWorse & \cohensdSmallBetter & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdSmallWorse & \cohensdSmallWorse & \notApplicable & \cohensdMediumBetter \\
+\MD & \cohensdMediumWorse & \cohensdSmallWorse & \cohensdMediumWorse & \cohensdSmallBetter & \cohensdSmallWorse & \cohensdMediumWorse & \cohensdMediumWorse & \notApplicable \\
+\bottomrule
+\end{tabular}%}
+\end{table}
+
+
+#mut3
+\begin{table}[!tb]
+\centering
+\caption{RQ3 -- Statistical comparison between the eight temporal neuron activation criteria. {(Legend as in Table~\ref{table:statTestsRQ2hyperparams})}}
+\label{table:statTestsRQ3criteria}
+\scriptsize
+\begin{tabular}{lcccccccc}
+\toprule
+& \INA & \ITK & \PNA & \PTK & \PD & \ND & \MI & \MD \\
+\midrule
+\INA & \notApplicable & \cohensdMediumBetter & \cohensdSmallWorse & \cohensdMediumBetter & \cohensdMediumBetter & \cohensdSmallWorse & \cohensdMediumBetter & \cohensdMediumBetter \\
+\ITK & \cohensdMediumWorse & \notApplicable & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdSmallWorse & \cohensdMediumWorse & \cohensdSmallBetter & \cohensdSmallBetter\\
+\tbgray \PNA & \tbgray \cohensdSmallBetter & \tbgray \cohensdMediumBetter & \tbgray \notApplicable & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter & \tbgray \cohensdSmallBetter & \tbgray \cohensdMediumBetter & \tbgray \cohensdMediumBetter \\
+\PTK & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse & \notApplicable & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse & \cohensdMediumWorse\\
+\PD & \cohensdMediumWorse & \cohensdSmallBetter & \cohensdMediumWorse & \cohensdMediumBetter & \notApplicable & \cohensdMediumWorse & \cohensdSmallBetter & \cohensdSmallBetter\\
+\tbSecondBest\ND & \tbSecondBest\cohensdSmallBetter & \tbSecondBest\cohensdMediumBetter & \tbSecondBest\cohensdSmallWorse & \tbSecondBest\cohensdMediumBetter & \tbSecondBest\cohensdMediumBetter & \tbSecondBest\notApplicable & \tbSecondBest\cohensdMediumBetter & \tbSecondBest\cohensdMediumBetter \\
+\MI & \cohensdMediumWorse & \cohensdSmallWorse & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdSmallWorse & \cohensdMediumWorse & \notApplicable & \cohensdSmallBetter \\
+\MD & \cohensdMediumWorse & \cohensdSmallWorse & \cohensdMediumWorse & \cohensdMediumBetter & \cohensdSmallWorse & \cohensdMediumWorse & \cohensdSmallWorse & \notApplicable \\
+\bottomrule
+\end{tabular}%}
+\end{table}
