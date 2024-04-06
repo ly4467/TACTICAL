@@ -28,10 +28,10 @@ How to reproduce the experimental results
 
 ### Mutation Process
 - The user-specified configuration files are stored under the directory `test/config/`. Replace the paths of `TACTICAL` in user-specified file under the line `addpath 1` with their own path. Users can also specify other configurations, such as bugset budget.
-- Navigate to the directory `test/`. Run the command `python valFL.py config/[benchmark]/[configfile]`.
-- Now the executable scripts have been generated under the directory `test/scripts/`.
-- Users need to edit the executable scripts permission using the command `chmod -R 777 scripts/*`.
-- Users need to run the script by using the command `./scripts/[scriptname]`. After mutation processed, mutation results data are stored in the `result/`.
+- Navigate to the directory `test/`. Run the command `python valFL.py config/[benchmark]/[configfile]`
+- Now the executable scripts have been generated under the directory `test/scripts/`
+- Users need to edit the executable scripts permission using the command `chmod -R 777 scripts/*`
+- Users need to run the script by using the command `./scripts/[scriptname]`. After mutation processed, mutation results data are stored in the `result/`
 
 ### RQs
 - After all benchmarks mutation processed, open the `src/preprocess.m` by using matlab. Users can change the path of data or the auto mode into manual mode, and run the analyzing progress. First, set `automode=1` in the `src/preprocess.m` file and run the analysis. All temporary data files are in the `[dataFolder]/[benchmarkdataname]/transDataProcessed`.
