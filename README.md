@@ -9,6 +9,7 @@ Modern *cyber-physical systems (CPS)* are evolving to integrate *deep neural net
 <div align=center><img width="80%" height="80%" src="figs/workflow.png"></div>
 
 ## System requirement
+
 - Operating system: Linux or MacOS;
 - Matlab (Simulink/Stateflow) version: >= 2020a. (Matlab license needed)
 - Python version: >= 3.3
@@ -24,14 +25,14 @@ Modern *cyber-physical systems (CPS)* are evolving to integrate *deep neural net
 
 ## Usage
 
-How to reproduce the experimental results
+To reproduce the experimental results, two steps are necessary: the mutation process and addressing research questions (RQs).
 
 ### Mutation Process
-- The user-specified configuration files are stored under the directory `test/config/`. Replace the paths of `TACTICAL` in user-specified file under the line `addpath 1` with their own path. Users can also specify other configurations, such as bugset budget.
-- Navigate to the directory `test/`. Run the command `python valFL.py config/[benchmark]/[configfile]`
-- Now the executable scripts have been generated under the directory `test/scripts/`
-- Users need to edit the executable scripts permission using the command `chmod -R 777 scripts/*`
-- Users need to run the script by using the command `./scripts/[scriptname]`. After mutation processed, mutation results data are stored in the `result/`
+- The user-specified configuration files are stored under the directory `test/config/`. Replace the paths of `TACTICAL` in user-specified file under the line `addpath 1` with their own path. Users can also specify other configurations, such as bugset and budget.
+- Navigate to the directory `test/`. Run the command `python valFL.py config/[benchmark]/[configfile]`.
+- Now the executable scripts have been generated under the directory `test/scripts/`.
+- Users need to edit the executable scripts permission using the command `chmod -R 777 scripts/*`.
+- Users need to run the script by using the command `./scripts/[scriptname]`. After the mutation is performed, mutation results data are stored in the `result/`.
 
 ### RQs
 - After all benchmarks mutation processed, open the `src/preprocess.m` by using matlab. Users can change the path of data or the auto mode into manual mode, and run the analyzing progress. First, set `automode=1` in the `src/preprocess.m` file and run the analysis. All temporary data files are in the `[dataFolder]/[benchmarkdataname]/transDataProcessed`.
